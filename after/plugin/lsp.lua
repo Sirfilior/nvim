@@ -5,7 +5,6 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.completion.spell,
 		null_ls.builtins.formatting.stylua,
 	},
 })
@@ -80,12 +79,16 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-	-- clangd = {},
-	-- gopls = {},
-	-- pyright = {},
-	-- rust_analyzer = {},
-	-- tsserver = {},
-
+	tsserver = {},
+	rust_analyzer = {},
+	svelte = {},
+	html = {},
+	jsonls = {},
+	prismals = {},
+	astro = {},
+	eslint = {},
+	intelephense = {},
+	tailwindcss = {},
 	lua_ls = {
 		Lua = {
 			workspace = { checkThirdParty = false },
