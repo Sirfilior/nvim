@@ -10,6 +10,11 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	config = function()
-		require('neo-tree').setup {}
+		require('neo-tree').setup {
+			window = {
+				width = 50
+			},
+		}
+		vim.cmd([[nnoremap <leader>\ :Neotree reveal<cr>]])
 	end,
 }
