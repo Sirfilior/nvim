@@ -4,8 +4,18 @@ return {
 	{ "tpope/vim-abolish" },
 	{ "mbbill/undotree" },
 	-- { 'github/copilot.vim' },
-	{ "kylechui/nvim-surround" },
-	{ "gbprod/substitute.nvim" },
+	{
+		"kylechui/nvim-surround",
+		config = function()
+			require("nvim-surround").setup({})
+		end,
+	},
+	{
+		"gbprod/substitute.nvim",
+		config = function()
+			require("substitute").setup({})
+		end,
+	},
 	{
 		-- Add indentation guides even on blank lines
 		"lukas-reineke/indent-blankline.nvim",
