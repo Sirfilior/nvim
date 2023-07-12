@@ -1,6 +1,27 @@
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
+local function getTelescopeOpts(state, path)
+	return {
+		cwd = path,
+		search_dirs = { path },
+		attach_mappings = function(prompt_bufnr, map)
+			local actions = require("telescope.actions")
+			actions.select_default:replace(function()
+				actions.close(prompt_bufnr)
+				local action_state = require("telescope.actions.state")
+				local selection = action_state.get_selected_entry()
+				local filename = selection.filename
+				if filename == nil then
+					filename = selection[1]
+				end
+				-- any way to open the file without triggering auto-close event of neo-tree?
+				require("neo-tree.sources.filesystem").navigate(state, state.path, filename)
+			end)
+			return true
+		end,
+	}
+end
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	version = "*",
@@ -10,10 +31,10 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	config = function()
-		require('neo-tree').setup {
+		require("neo-tree").setup({
 			window = {
 				width = 50,
-				position = 'current'
+				position = "current",
 			},
 			default_component_configs = {
 				icon = {
@@ -22,9 +43,32 @@ return {
 				},
 				git_status = {
 					symbols = {
-						renamed  = "󰁕",
+						renamed = "󰁕",
 						unstaged = "󰄱",
 					},
+				},
+			},
+			filesystem = {
+				filtered_items = {
+					hide_hidden = false,
+				},
+				window = {
+					mappings = {
+						["tf"] = "telescope_find",
+						["tg"] = "telescope_grep",
+					},
+				},
+				commands = {
+					telescope_find = function(state)
+						local node = state.tree:get_node()
+						local path = node:get_id()
+						require("telescope.builtin").find_files(getTelescopeOpts(state, path))
+					end,
+					telescope_grep = function(state)
+						local node = state.tree:get_node()
+						local path = node:get_id()
+						require("telescope.builtin").live_grep(getTelescopeOpts(state, path))
+					end,
 				},
 			},
 			document_symbols = {
@@ -44,10 +88,10 @@ return {
 					Struct = { icon = "󰌗", hl = "Type" },
 					Operator = { icon = "󰆕", hl = "Operator" },
 					TypeParameter = { icon = "󰊄", hl = "Type" },
-					StaticMethod = { icon = '󰠄 ', hl = 'Function' },
-				}
+					StaticMethod = { icon = "󰠄 ", hl = "Function" },
+				},
 			},
-		}
+		})
 		vim.cmd([[nnoremap <leader>\ :Neotree reveal<cr>]])
 	end,
 }
