@@ -1,11 +1,35 @@
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
+local action_state = require("telescope.actions.state")
+local harpoonAction = function(prompt_bufnr)
+	local entry = action_state.get_selected_entry()
+
+	if not entry then
+		utils.notify("actions.set.edit", {
+			msg = "Nothing currently selected",
+			level = "WARN",
+		})
+		return
+	end
+
+	if entry.filename then
+		print("Harpoon: adding " .. entry.filename)
+		require("harpoon.mark").add_file(entry.filename)
+	else
+		print("No file associated with this entry")
+	end
+end
+
 require("telescope").setup({
 	defaults = {
 		mappings = {
 			i = {
 				["<C-u>"] = false,
 				["<C-d>"] = false,
+				["<C-a>"] = harpoonAction,
+			},
+			n = {
+				["a"] = harpoonAction,
 			},
 		},
 	},
