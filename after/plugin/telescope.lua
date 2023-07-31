@@ -1,27 +1,11 @@
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-local utils = require("telescope.actions.utils")
-local actions = require("telescope.actions")
-local harpoonAction = function(prompt_bufnr)
-	actions.drop_all(prompt_bufnr)
-	actions.add_selection(prompt_bufnr)
-	utils.map_selections(prompt_bufnr, function(selection)
-		print("Added " .. selection[1] .. " to harpoon marks")
-		pcall(require("harpoon.mark").add_file, selection[1])
-	end)
-	actions.remove_selection(prompt_bufnr)
-end
-
 require("telescope").setup({
 	defaults = {
 		mappings = {
 			i = {
 				["<C-u>"] = false,
 				["<C-d>"] = false,
-				["<C-a>"] = harpoonAction,
-			},
-			n = {
-				["a"] = harpoonAction,
 			},
 		},
 	},
