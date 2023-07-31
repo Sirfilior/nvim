@@ -54,8 +54,8 @@ return {
 				},
 				window = {
 					mappings = {
-						["Sf"] = "telescope_find",
-						["Sg"] = "telescope_grep",
+						["f"] = "telescope_find",
+						["g"] = "telescope_grep",
 					},
 				},
 				commands = {
