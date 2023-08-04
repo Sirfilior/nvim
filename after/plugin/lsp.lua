@@ -6,6 +6,8 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettierd,
 		-- null_ls.builtins.diagnostics.eslint,
 		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.formatting.gofmt,
+		null_ls.builtins.formatting.goimports_reviser,
 	},
 })
 
@@ -21,10 +23,6 @@ end
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(client, bufnr)
-	-- NOTE: Remember that lua is a real programming language, and as such it is possible
-	-- to define small helper and utility functions so you don't have to repeat yourself
-	-- many times.
-	--
 	-- In this case, we create a function that lets us more easily define mappings specific
 	-- for LSP related items. It sets the mode, buffer and description for us each time.
 	local nmap = function(keys, func, desc)
@@ -95,6 +93,7 @@ local servers = {
 			telemetry = { enable = false },
 		},
 	},
+	gopls = {},
 }
 
 -- Setup neovim lua configuration
