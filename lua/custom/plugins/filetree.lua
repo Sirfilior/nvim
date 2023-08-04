@@ -30,16 +30,13 @@ return {
 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 		"MunifTanjim/nui.nvim",
 	},
+	lazy = false,
 	keys = {
 		{ "<leader>t", ":Neotree toggle float<CR>", silent = true, desc = "Float File [T]ree" },
-		{ "<leader><tab>", ":Neotree toggle left<CR>", silent = true, desc = "Left File Explorer" },
+		{ "<leader>st", ":Neotree toggle left<CR>", silent = true, desc = "Left [S]ide File [T]ree" },
 	},
 	config = function()
 		require("neo-tree").setup({
-			window = {
-				width = 50,
-				position = "current",
-			},
 			default_component_configs = {
 				icon = {
 					folder_empty = "󰜌",
@@ -53,6 +50,7 @@ return {
 				},
 			},
 			filesystem = {
+				hijack_netrw_behavior = "open_current",
 				filtered_items = {
 					hide_hidden = false,
 				},
