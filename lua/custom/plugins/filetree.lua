@@ -31,12 +31,12 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	lazy = false,
-	keys = {
-		{ "<leader>t", ":Neotree toggle float<CR>", silent = true, desc = "Float File [T]ree" },
-		{ "<leader>st", ":Neotree toggle left<CR>", silent = true, desc = "Left [S]ide File [T]ree" },
-	},
 	config = function()
 		require("neo-tree").setup({
+			window = {
+				width = 50,
+				position = "current",
+			},
 			default_component_configs = {
 				icon = {
 					folder_empty = "󰜌",
@@ -50,7 +50,6 @@ return {
 				},
 			},
 			filesystem = {
-				hijack_netrw_behavior = "open_current",
 				filtered_items = {
 					hide_hidden = false,
 				},
@@ -105,5 +104,7 @@ return {
 				},
 			},
 		})
+		vim.cmd([[nnoremap <leader>\ :Neotree reveal<cr>]])
+		vim.cmd([[nnoremap <C-\> :Neotree reveal left<cr>]])
 	end,
 }
