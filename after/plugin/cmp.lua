@@ -64,13 +64,6 @@ cmp.setup({
 			},
 		}),
 	},
-	experimental = {
-		-- I like the new menu better! Nice work hrsh7th
-		native_menu = false,
-
-		-- Let's play with this for a day or two
-		ghost_text = false,
-	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-n>"] = cmp.mapping.select_next_item(),
 		["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -101,6 +94,7 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = cmp.config.sources({
+		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
 		{ name = "copilot" },
@@ -108,7 +102,6 @@ cmp.setup({
 		{ name = "buffer" },
 	}),
 })
-
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
