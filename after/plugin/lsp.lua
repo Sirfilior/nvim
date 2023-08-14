@@ -11,16 +11,6 @@ null_ls.setup({
 	},
 })
 
-local lsp_formatting = function(bufnr)
-	vim.lsp.buf.format({
-		filter = function(client)
-			-- apply whatever logic you want (in this example, we'll only use null-ls)
-			return client.name == "null-ls"
-		end,
-		bufnr = bufnr,
-	})
-end
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(client, bufnr)
 	-- In this case, we create a function that lets us more easily define mappings specific
@@ -59,17 +49,6 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
 		vim.lsp.buf.format()
 	end, { desc = "Format current buffer with LSP" })
-
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				lsp_formatting(bufnr)
-			end,
-		})
-	end
 end
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
