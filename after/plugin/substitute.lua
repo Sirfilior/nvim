@@ -1,7 +1,0 @@
-vim.keymap.set("n", "<leader>r", require('substitute').operator, { noremap = true })
-vim.keymap.set("n", "<leader>rs", require('substitute').line, { noremap = true })
-vim.keymap.set("n", "<leader>R", require('substitute').eol, { noremap = true })
-vim.keymap.set("x", "<leader>r", require('substitute').visual, { noremap = true })
-vim.keymap.set("n", "<leader>s", require('substitute.range').operator, { noremap = true })
-vim.keymap.set("x", "<leader>s", require('substitute.range').visual, { noremap = true })
-vim.keymap.set("n", "<leader>ss", require('substitute.range').word, { noremap = true })

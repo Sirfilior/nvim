@@ -43,6 +43,59 @@ return {
 	},
 	{
 		"gbprod/substitute.nvim",
+		keys = {
+			{
+				"<leader>r",
+				function()
+					require("substitute").operator()
+				end,
+				noremap = true,
+			},
+			{
+				"<leader>rs",
+				function()
+					require("substitute").line()
+				end,
+				noremap = true,
+			},
+			{
+				"<leader>R",
+				function()
+					require("substitute").eol()
+				end,
+				noremap = true,
+			},
+			{
+				"<leader>r",
+				function()
+					require("substitute").visual()
+				end,
+				"x",
+				noremap = true,
+			},
+			{
+				"<leader>s",
+				function()
+					require("substitute.range").opeartor()
+				end,
+				noremap = true,
+			},
+			{
+				"<leader>s",
+				function()
+					require("substitute.range").visual()
+				end,
+				"x",
+				noremap = true,
+			},
+			{
+				"<leader>ss",
+				function()
+					require("substitute.range").word()
+				end,
+				noremap = true,
+			},
+		},
 		config = function()
 			require("substitute").setup({})
 		end,
