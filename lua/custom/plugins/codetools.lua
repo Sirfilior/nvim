@@ -2,7 +2,9 @@ return {
 	-- Detect tabstop and shiftwidth automatically
 	{ "tpope/vim-sleuth" },
 	{ "tpope/vim-abolish" },
-	{ "mbbill/undotree" },
+	{ "mbbill/undotree", keys = {
+		{ "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undotree" },
+	} },
 	-- { 'github/copilot.vim' },
 	{
 		"nvim-pack/nvim-spectre",
