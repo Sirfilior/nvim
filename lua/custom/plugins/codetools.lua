@@ -26,6 +26,14 @@ return {
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
 		},
+		keys = {
+			{ "<leader>to", "<cmd>TroubleToggle<cr>", desc = "(Trouble)" },
+			{ "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+			{ "<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+			{ "<leader>tl", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+			{ "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+			{ "<leader>tq", "<cmd>TroubleToggle lsp_references<cr>", desc = "LSP Ref List (Trouble)" },
+		},
 	},
 	{
 		"kylechui/nvim-surround",
