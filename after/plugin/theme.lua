@@ -12,6 +12,8 @@ require("catppuccin").setup({
 		mason = true,
 		neotree = true,
 		which_key = true,
+		noice = true,
+		notify = true,
 		native_lsp = {
 			enabled = true,
 			underlines = {
@@ -21,6 +23,7 @@ require("catppuccin").setup({
 				information = { "undercurl" },
 			},
 		},
+		lsp_trouble = true,
 		dap = {
 			enabled = true,
 			enable_ui = true, -- enable nvim-dap-ui
