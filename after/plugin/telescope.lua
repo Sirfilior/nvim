@@ -1,14 +1,12 @@
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 local action_state = require("telescope.actions.state")
-local harpoonAction = function(prompt_bufnr)
+local trouble = require("trouble.providers.telescope")
+local harpoonAction = function(_)
 	local entry = action_state.get_selected_entry()
 
 	if not entry then
-		utils.notify("actions.set.edit", {
-			msg = "Nothing currently selected",
-			level = "WARN",
-		})
+		print("No entry found")
 		return
 	end
 
@@ -27,9 +25,11 @@ require("telescope").setup({
 				["<C-u>"] = false,
 				["<C-d>"] = false,
 				["<C-a>"] = harpoonAction,
+				["<c-t>"] = trouble.open_with_trouble,
 			},
 			n = {
 				["a"] = harpoonAction,
+				["<c-t>"] = trouble.open_with_trouble,
 			},
 		},
 	},

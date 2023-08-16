@@ -8,9 +8,23 @@ require("catppuccin").setup({
 		gitsigns = true,
 		nvimtree = true,
 		telescope = true,
+		treesitter = true,
 		mason = true,
 		neotree = true,
 		which_key = true,
+		native_lsp = {
+			enabled = true,
+			underlines = {
+				errors = { "undercurl" },
+				hints = { "undercurl" },
+				warnings = { "undercurl" },
+				information = { "undercurl" },
+			},
+		},
+		dap = {
+			enabled = true,
+			enable_ui = true, -- enable nvim-dap-ui
+		},
 		-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
 	},
 })
