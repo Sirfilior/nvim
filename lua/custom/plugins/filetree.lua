@@ -79,12 +79,12 @@ return {
 		{
 			"<leader>fe",
 			function()
-				require("neo-tree.command").execute({ toggle = true, dir = get_root() })
+				require("neo-tree.command").execute({ toggle = true, reveal = true })
 			end,
 			desc = "Explorer NeoTree (root dir)",
 		},
 		{
-			"<leader>ff",
+			"<leader>fl",
 			function()
 				require("neo-tree.command").execute({ toggle = true, reveal = true, position = "left" })
 			end,
