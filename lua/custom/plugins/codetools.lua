@@ -15,19 +15,38 @@ return {
 			{ "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
 		},
 	},
+	-- Finds and lists all of the TODO, HACK, BUG, etc comment
+	-- in your project and loads them into a browsable list.
 	{
 		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {},
+		cmd = { "TodoTrouble", "TodoTelescope" },
+		event = { "BufReadPost", "BufNewFile" },
+		config = true,
+		keys = {
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "Next todo comment",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "Previous todo comment",
+			},
+			{ "<leader>tt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+			{ "<leader>tT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+			{ "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+			{ "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+		},
 	},
 	{
 		"folke/trouble.nvim",
+		cmd = { "TroubleToggle", "Trouble" },
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
 		keys = {
 			{ "<leader>to", "<cmd>TroubleToggle<cr>", desc = "(Trouble)" },
 			{ "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
@@ -72,7 +91,7 @@ return {
 				function()
 					require("substitute").visual()
 				end,
-				"x",
+				mode = { "x" },
 				noremap = true,
 			},
 			{
@@ -87,7 +106,7 @@ return {
 				function()
 					require("substitute.range").visual()
 				end,
-				"x",
+				mode = { "x" },
 				noremap = true,
 			},
 			{

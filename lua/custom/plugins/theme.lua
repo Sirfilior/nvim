@@ -13,6 +13,7 @@ return {
 			color_overrides = {},
 			custom_highlights = {},
 			integrations = {
+				alpha = true,
 				cmp = true,
 				gitsigns = true,
 				nvimtree = true,
@@ -32,6 +33,7 @@ return {
 						information = { "undercurl" },
 					},
 				},
+				navic = { enabled = true, custom_bg = "lualine" },
 				lsp_trouble = true,
 				dap = {
 					enabled = true,

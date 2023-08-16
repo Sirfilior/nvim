@@ -16,7 +16,7 @@ You should run that command and read that help section for more information.
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-require("custom")
+require("config")
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim

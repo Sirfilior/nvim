@@ -5,6 +5,7 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
+local icons = require("config.icons")
 
 return {
 	-- NOTE: Yes, you can install new plugins here!
@@ -81,15 +82,7 @@ return {
 		-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
 		vim.keymap.set("n", "<F7>", dapui.toggle, { desc = "Debug: See last session result." })
 
-		local dapicons = {
-			Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-			Breakpoint = " ",
-			BreakpointCondition = " ",
-			BreakpointRejected = { " ", "DiagnosticError" },
-			LogPoint = ".>",
-		}
-
-		for name, sign in pairs(dapicons) do
+		for name, sign in pairs(icons.dap) do
 			sign = type(sign) == "table" and sign or { sign }
 			vim.fn.sign_define(
 				"Dap" .. name,

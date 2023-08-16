@@ -1,5 +1,6 @@
 -- [[ Configure LSP ]]
 local null_ls = require("null-ls")
+local icons = require("config.icons")
 
 null_ls.setup({
 	sources = {
@@ -16,6 +17,9 @@ null_ls.setup({
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(client, bufnr)
+	if client.server_capabilities.documentSymbolProvider then
+		require("nvim-navic").attach(client, bufnr)
+	end
 	-- In this case, we create a function that lets us more easily define mappings specific
 	-- for LSP related items. It sets the mode, buffer and description for us each time.
 	local nmap = function(keys, func, desc)
@@ -102,15 +106,8 @@ mason_lspconfig.setup_handlers({
 	end,
 })
 
-local diagnosticsIcons = {
-	Error = " ",
-	Warn = " ",
-	Hint = " ",
-	Info = " ",
-}
-
 -- diagnostics
-for name, icon in pairs(diagnosticsIcons) do
+for name, icon in pairs(icons.diagnostics) do
 	name = "DiagnosticSign" .. name
 	vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
 end
