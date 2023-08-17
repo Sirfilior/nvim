@@ -1,3 +1,6 @@
+if vim.g.vscode then
+	return
+end
 -- [[ Configure LSP ]]
 local null_ls = require("null-ls")
 local icons = require("config.icons")

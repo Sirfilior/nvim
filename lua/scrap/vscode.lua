@@ -12,7 +12,7 @@ Config.options.checker.enabled = false
 Config.options.change_detection.enabled = false
 Config.options.defaults.cond = function(plugin)
 	-- return not vim.tbl_contains(enabled, plugin.name)
-	return true
+	return false
 end
 
 -- Add some vscode specific keymaps
