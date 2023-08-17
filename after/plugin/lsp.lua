@@ -13,7 +13,6 @@ null_ls.setup({
 		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.formatting.goimports_reviser,
 		null_ls.builtins.formatting.black,
-		null_ls.builtins.diagnostics.mypy,
 		null_ls.builtins.diagnostics.ruff,
 	},
 })
@@ -75,6 +74,8 @@ local servers = {
 	astro = {},
 	eslint = {},
 	intelephense = {},
+	pyright = {},
+	ruff_lsp = {},
 	tailwindcss = {},
 	lua_ls = {
 		Lua = {
@@ -83,6 +84,15 @@ local servers = {
 		},
 	},
 	gopls = {},
+}
+
+local attachOverrides = {
+	ruff_lsp = function(client, bufnr)
+		-- Disable hover in favor of Pyright
+		client.server_capabilities.hoverProvider = false
+
+		on_attach(client, bufnr)
+	end,
 }
 
 -- Setup neovim lua configuration
@@ -103,7 +113,7 @@ mason_lspconfig.setup_handlers({
 	function(server_name)
 		require("lspconfig")[server_name].setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
+			on_attach = attachOverrides[server_name] or on_attach,
 			settings = servers[server_name],
 		})
 	end,

@@ -1,7 +1,6 @@
 return {
 	{
 		-- Snippet Engine
-		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
