@@ -6,6 +6,8 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		build = ":TSUpdate",
+		event = { "BufReadPost", "BufNewFile" },
+		cmd = { "TSUpdateSync" },
 		keys = {
 			-- Diagnostic keymaps
 			{
@@ -52,6 +54,7 @@ return {
 				"vimdoc",
 				"vim",
 				"javascript",
+				"vue",
 			},
 
 			-- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)

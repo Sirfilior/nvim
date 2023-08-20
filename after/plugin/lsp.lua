@@ -84,6 +84,7 @@ local servers = {
 		},
 	},
 	gopls = {},
+	volar = {},
 }
 
 local attachOverrides = {
