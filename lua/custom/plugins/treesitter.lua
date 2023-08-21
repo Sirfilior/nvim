@@ -4,6 +4,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
+			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile" },
@@ -70,6 +71,9 @@ return {
 					scope_incremental = "<c-s>",
 					node_decremental = "<M-space>",
 				},
+			},
+			context_commentstring = {
+				enable = true,
 			},
 			textobjects = {
 				select = {
