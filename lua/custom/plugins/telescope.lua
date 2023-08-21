@@ -129,6 +129,7 @@ return {
 				end,
 				desc = "[S]earch [D]iagnostics",
 			},
+			{ "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
 		},
 	},
 
