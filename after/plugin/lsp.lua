@@ -16,6 +16,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.formatting.goimports_reviser,
 		null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.djlint,
 		null_ls.builtins.diagnostics.ruff,
 	},
 })
