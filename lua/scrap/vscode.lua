@@ -31,6 +31,7 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>ss", [[<cmd>call VSCodeNotify('workbench.action.gotoSymbol')<cr>]])
 vim.keymap.set("n", "<leader>fe", [[<cmd>call VSCodeNotify('workbench.files.action.focusFilesExplorer')<cr>]])
 vim.keymap.set("n", "<leader>ft", [[<cmd>call VSCodeNotify('terminal.focus')<cr>]])
+vim.keymap.set("n", "<leader>ca", [[<cmd>call VSCodeNotify('editor.action.quickFix')<cr>]])
 
 vim.api.nvim_set_keymap("x", "gc", "<Plug>VSCodeCommentary", {})
 vim.api.nvim_set_keymap("n", "gc", "<Plug>VSCodeCommentary", {})
