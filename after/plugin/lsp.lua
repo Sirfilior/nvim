@@ -4,6 +4,9 @@ end
 -- [[ Configure LSP ]]
 local null_ls = require("null-ls")
 local icons = require("config.icons")
+local autoformat = require("config.autoformat")
+
+autoformat.lsp_autoformat()
 
 null_ls.setup({
 	sources = {
@@ -22,6 +25,9 @@ local on_attach = function(client, bufnr)
 	if client.server_capabilities.documentSymbolProvider then
 		require("nvim-navic").attach(client, bufnr)
 	end
+
+	autoformat.lsp_format_attach(client, bufnr)
+
 	-- In this case, we create a function that lets us more easily define mappings specific
 	-- for LSP related items. It sets the mode, buffer and description for us each time.
 	local nmap = function(keys, func, desc)

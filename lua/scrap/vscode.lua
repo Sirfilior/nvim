@@ -29,7 +29,8 @@ vim.keymap.set(
 	[[<cmd>call VSCodeNotify('workbench.action.findInFiles', { 'query': expand('<cword>')})<cr>]]
 )
 vim.keymap.set("n", "<leader>ss", [[<cmd>call VSCodeNotify('workbench.action.gotoSymbol')<cr>]])
-vim.keymap.set("n", "<leader>fl", [[<cmd>call VSCodeNotify('workbench.files.action.focusFilesExplorer')<cr>]])
+vim.keymap.set("n", "<leader>fe", [[<cmd>call VSCodeNotify('workbench.files.action.focusFilesExplorer')<cr>]])
+vim.keymap.set("n", "<leader>ft", [[<cmd>call VSCodeNotify('terminal.focus')<cr>]])
 
 vim.api.nvim_set_keymap("x", "gc", "<Plug>VSCodeCommentary", {})
 vim.api.nvim_set_keymap("n", "gc", "<Plug>VSCodeCommentary", {})
