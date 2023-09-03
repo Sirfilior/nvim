@@ -11,15 +11,10 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettierd,
 		-- null_ls.builtins.diagnostics.eslint,
 		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.gofmt,
-		null_ls.builtins.formatting.goimports_reviser,
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.djlint,
 		null_ls.builtins.diagnostics.ruff,
 	},
-	on_attach = function(client, bufnr)
-		autoformat.lsp_format_attach(client, bufnr)
-	end,
 })
 
 --  This function gets run when an LSP connects to a particular buffer.
@@ -27,6 +22,8 @@ local on_attach = function(client, bufnr)
 	if client.server_capabilities.documentSymbolProvider then
 		require("nvim-navic").attach(client, bufnr)
 	end
+
+	autoformat.lsp_format_attach(client, bufnr)
 
 	-- In this case, we create a function that lets us more easily define mappings specific
 	-- for LSP related items. It sets the mode, buffer and description for us each time.
@@ -82,14 +79,33 @@ local servers = {
 	intelephense = {},
 	pyright = {},
 	ruff_lsp = {},
-	tailwindcss = {},
+	-- tailwindcss = {},
 	lua_ls = {
 		Lua = {
 			workspace = { checkThirdParty = false },
 			telemetry = { enable = false },
 		},
 	},
-	gopls = {},
+	gopls = {
+		settings = {
+			gopls = {
+				codelenses = { test = true },
+				hints = {
+					assignVariableTypes = true,
+					compositeLiteralFields = true,
+					compositeLiteralTypes = true,
+					constantValues = true,
+					functionTypeParameters = true,
+					parameterNames = true,
+					rangeVariableTypes = true,
+				},
+			},
+		},
+
+		flags = {
+			debounce_text_changes = 200,
+		},
+	},
 	volar = {},
 }
 

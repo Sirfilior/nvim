@@ -15,7 +15,7 @@ return {
 		dependencies = {
 			-- & its associated nvim-cmp source
 			"saadparwaiz1/cmp_luasnip",
-			"roobert/tailwindcss-colorizer-cmp.nvim",
+			-- "roobert/tailwindcss-colorizer-cmp.nvim",
 
 			-- Adds LSP completion capabilities
 			"hrsh7th/cmp-nvim-lsp",
@@ -82,9 +82,9 @@ return {
 							tn = "[TabNine]",
 							eruby = "[erb]",
 						},
-						before = function(entry, vim_item)
-							return require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
-						end,
+						-- before = function(entry, vim_item)
+						-- 	return require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
+						-- end,
 					}),
 				},
 				mapping = cmp.mapping.preset.insert({

@@ -115,10 +115,20 @@ return {
 					unstaged = "󰄱",
 				},
 			},
+			file_size = {
+				enabled = false,
+			},
+			type = {
+				enabled = false,
+			},
+			last_modified = {
+				enabled = false,
+			},
 		},
 		filesystem = {
 			filtered_items = {
 				hide_hidden = false,
+				hide_dotfiles = false,
 			},
 			window = {
 				mappings = {

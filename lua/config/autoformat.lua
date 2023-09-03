@@ -8,7 +8,7 @@ local lsp_formatting = function(bufnr)
 	vim.lsp.buf.format({
 		filter = function(client)
 			-- apply whatever logic you want (in this example, we'll only use null-ls)
-			return client.name == "null-ls"
+			return client.name == "null-ls" or client.name == "gopls"
 		end,
 		bufnr = bufnr,
 	})
@@ -28,6 +28,7 @@ M.lsp_format_attach = function(client, bufnr)
 		-- Create an autocmd that will run *before* we save the buffer.
 		--  Run the formatting command for the LSP that has just attached.
 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			group = augroup,
 			buffer = bufnr,

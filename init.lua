@@ -58,6 +58,7 @@ require("lazy").setup({
 			-- Additional lua configuration, makes nvim stuff amazing!
 			"folke/neodev.nvim",
 			"jose-elias-alvarez/null-ls.nvim",
+			"simrat39/inlay-hints.nvim",
 		},
 	},
 	-- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
