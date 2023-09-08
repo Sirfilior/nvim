@@ -15,6 +15,9 @@ null_ls.setup({
 		null_ls.builtins.formatting.djlint,
 		null_ls.builtins.diagnostics.ruff,
 	},
+	on_attach = function(client, bufnr)
+		autoformat.lsp_format_attach(client, bufnr)
+	end,
 })
 
 --  This function gets run when an LSP connects to a particular buffer.
