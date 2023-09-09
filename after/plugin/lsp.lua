@@ -26,8 +26,6 @@ local on_attach = function(client, bufnr)
 		require("nvim-navic").attach(client, bufnr)
 	end
 
-	autoformat.lsp_format_attach(client, bufnr)
-
 	-- In this case, we create a function that lets us more easily define mappings specific
 	-- for LSP related items. It sets the mode, buffer and description for us each time.
 	local nmap = function(keys, func, desc)
@@ -59,6 +57,8 @@ local on_attach = function(client, bufnr)
 	nmap("<leader>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, "[W]orkspace [L]ist Folders")
+
+	autoformat.lsp_format_attach(client, bufnr)
 
 	-- Create a command `:Format` local to the LSP buffer
 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)

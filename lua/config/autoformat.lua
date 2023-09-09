@@ -20,17 +20,17 @@ vim.api.nvim_create_user_command("FormatToggle", function()
 	print("Setting autoformatting to: " .. tostring(format_is_enabled))
 end, {})
 
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+M.augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 M.lsp_format_attach = function(client, bufnr)
 	-- Only attach to clients that support document formatting
 	if client.supports_method("textDocument/formatting") then
 		-- Create an autocmd that will run *before* we save the buffer.
 		--  Run the formatting command for the LSP that has just attached.
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+		vim.api.nvim_clear_autocmds({ group = M.augroup, buffer = bufnr })
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
+			group = M.augroup,
 			buffer = bufnr,
 			callback = function()
 				if not format_is_enabled then
