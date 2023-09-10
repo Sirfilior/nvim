@@ -81,14 +81,21 @@ return {
 			function()
 				require("neo-tree.command").execute({ toggle = true, reveal = true })
 			end,
-			desc = "Explorer NeoTree (root dir)",
+			desc = "[F]ile Tree [E]xplorer NeoTree (cwd)",
 		},
 		{
 			"<leader>fl",
 			function()
 				require("neo-tree.command").execute({ toggle = true, reveal = true, position = "left" })
 			end,
-			desc = "Explorer NeoTree (cwd)",
+			desc = "[F]ile Tree Explorer NeoTree [L]eft (cwd)",
+		},
+		{
+			"<leader>ff",
+			function()
+				require("neo-tree.command").execute({ toggle = true, reveal = true, position = "float" })
+			end,
+			desc = "[F]ile Tree Explorer NeoTree [F]loat (cwd)",
 		},
 	},
 	init = function()
