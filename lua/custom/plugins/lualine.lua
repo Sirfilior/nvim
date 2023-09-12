@@ -9,6 +9,7 @@ return {
 		opts = function()
 			local icons = require("config.icons")
 			local Util = require("util")
+			local Lualine = require("util.lualine")
 			-- local getPalette = require("catppuccin.util.lualine")
 			-- local theme = getPalette("macchiato")
 			-- theme.normal.c.bg = "#112233"
@@ -22,7 +23,7 @@ return {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { "branch" },
+					lualine_b = { "branch", { Lualine.harpoon_component } },
 					lualine_c = {
 						{
 							"diagnostics",
