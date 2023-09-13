@@ -10,6 +10,9 @@ return {
 			local harpoonAction = require("util.telescope.harpoonAction")
 			return {
 				defaults = {
+					preview = {
+						filetype_hook = require("util.telescope.previewerHook"),
+					},
 					mappings = {
 						i = {
 							["<C-u>"] = false,

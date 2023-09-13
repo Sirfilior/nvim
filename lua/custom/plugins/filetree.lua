@@ -142,6 +142,7 @@ return {
 					["f"] = "noop",
 					["fs"] = "telescope_find",
 					["fg"] = "telescope_grep",
+					["o"] = "system_open",
 				},
 			},
 			commands = {
@@ -154,6 +155,15 @@ return {
 					local node = state.tree:get_node()
 					local path = node:get_id()
 					require("telescope.builtin").live_grep(getTelescopeOpts(state, path))
+				end,
+				system_open = function(state)
+					local node = state.tree:get_node()
+					local path = node:get_id()
+					path = vim.fn.shellescape(path, 1)
+					-- macOs: open file in default application in the background.
+					vim.api.nvim_command("silent !open -g " .. path)
+					-- Linux: open file in default application
+					vim.api.nvim_command("silent !xdg-open " .. path)
 				end,
 			},
 		},

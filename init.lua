@@ -71,6 +71,7 @@ require("lazy").setup({
 
 	-- NOTE: This can be used to override plugin setups and disable
 	{ import = "scrap.vscode" },
+	{ import = "scrap.typo3" },
 }, {})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
