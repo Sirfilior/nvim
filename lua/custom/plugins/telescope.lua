@@ -33,6 +33,7 @@ return {
 
 			-- Enable telescope fzf native, if installed
 			require("telescope").load_extension("fzf")
+			require("telescope").load_extension("notify")
 		end,
 		keys = {
 			{
