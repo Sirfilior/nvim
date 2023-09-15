@@ -32,6 +32,7 @@ require("lazy").setup({
   { import = "main.plugins.lang.tailwind" },
   { import = "main.plugins.lang.go" },
   { import = "main.plugins.lang.typescript" },
+  { import = "main.plugins.lang.python" },
 
   { import = "scrap.plugins.vscode" },
   { import = "scrap.plugins.prettier" },
