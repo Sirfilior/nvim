@@ -54,13 +54,11 @@ return {
       ---@type lspconfig.options
       servers = {
         rust_analyzer = {},
-        svelte = {},
         html = {},
+        cssls = {},
         jsonls = {},
         prismals = {},
-        astro = {},
         eslint = {},
-        intelephense = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -72,7 +70,6 @@ return {
             },
           },
         },
-        volar = {},
         typst_lsp = {
           exportPdf = "never",
         },

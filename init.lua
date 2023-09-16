@@ -29,6 +29,7 @@ require("lazy").setup({
   { import = "main.plugins" },
 
   { import = "main.plugins.dap.core" },
+  { import = "main.plugins.lang.jsframeworks" },
   { import = "main.plugins.lang.tailwind" },
   { import = "main.plugins.lang.go" },
   { import = "main.plugins.lang.typescript" },
