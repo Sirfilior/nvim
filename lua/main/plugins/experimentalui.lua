@@ -53,6 +53,37 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
+    keys = {
+      {
+        "<S-Enter>",
+        function()
+          require("noice").redirect(vim.fn.getcmdline())
+        end,
+        mode = "c",
+        desc = "Redirect Cmdline",
+      },
+      {
+        "<leader>nh",
+        function()
+          require("noice").cmd("history")
+        end,
+        desc = "Noice History",
+      },
+      {
+        "<leader>na",
+        function()
+          require("noice").cmd("all")
+        end,
+        desc = "Noice All",
+      },
+      {
+        "<leader>nd",
+        function()
+          require("noice").cmd("dismiss")
+        end,
+        desc = "Dismiss All",
+      },
+    },
     opts = {
       lsp = {
         override = {
@@ -60,17 +91,18 @@ return {
           ["vim.lsp.util.stylize_markdown"] = true,
           ["cmp.entry.get_documentation"] = true,
         },
-        progress = {
-          enabled = true,
-          -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-          -- See the section on formatting for more details on how to customize.
-          --- @type NoiceFormat|string
-          format = "lsp_progress",
-          --- @type NoiceFormat|string
-          format_done = "lsp_progress_done",
-          throttle = 1000 / 30, -- frequency to update lsp progress message
-          view = "mini",
+      },
+      views = {
+        split = {
+          enter = true,
         },
+        vsplit = {
+          enter = true,
+        },
+      },
+      redirect = {
+        view = "split",
+        filter = { event = "msg_show" },
       },
       routes = {
         {
@@ -83,13 +115,6 @@ return {
             },
           },
           view = "mini",
-        },
-        {
-          filter = {
-            event = "notify",
-            find = "No information available",
-          },
-          opts = { skip = true },
         },
       },
       presets = {
