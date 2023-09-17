@@ -95,6 +95,7 @@ return {
       views = {
         split = {
           enter = true,
+          size = "50%",
         },
         vsplit = {
           enter = true,
