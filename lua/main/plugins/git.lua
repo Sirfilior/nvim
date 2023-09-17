@@ -3,6 +3,7 @@ return {
   {
     "tpope/vim-fugitive",
     opts = {},
+    event = { "CmdlineEnter" },
     keys = {
       { "<leader>gs", "<cmd>Git<cr>", desc = "Git" },
       { "gh", "<cmd>diffget //2<CR>", desc = "Git diff 2" },

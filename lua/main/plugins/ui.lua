@@ -30,6 +30,20 @@ return {
       wk.register(opts.defaults)
     end,
   },
+  {
+    "norcalli/nvim-colorizer.lua",
+    event = "BufRead",
+    config = function()
+      require("colorizer").setup({
+        "css",
+        "scss",
+        "javascript",
+        html = {
+          mode = "foreground",
+        },
+      })
+    end,
+  },
   -- icons
   { "nvim-tree/nvim-web-devicons", lazy = true },
   -- ui components
