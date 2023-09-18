@@ -45,17 +45,11 @@ return {
       ensure_installed = {
         "c",
         "cpp",
-        "go",
         "lua",
-        "python",
-        "rust",
-        "tsx",
-        "svelte",
         "typescript",
         "vimdoc",
         "vim",
         "javascript",
-        "vue",
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)

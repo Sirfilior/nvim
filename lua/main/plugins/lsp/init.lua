@@ -4,6 +4,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
       { "folke/neodev.nvim", opts = {} },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -158,7 +159,10 @@ return {
           if opts.setup["*"](server, server_opts) then
             return
           end
+        elseif require("neoconf").get(server_name .. ".disable") then
+          return
         end
+
         require("lspconfig")[server].setup(server_opts)
       end
 
