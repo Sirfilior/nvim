@@ -11,8 +11,17 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        volar = {},
+        volar = {
+          filetypes = { "vue", "typescript" },
+        },
       },
+    },
+    setup = {
+      volar = function(_, opts)
+        if not require("neoconf").get("volar.enable") then
+          return true
+        end
+      end,
     },
   },
 }

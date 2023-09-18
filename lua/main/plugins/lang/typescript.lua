@@ -46,6 +46,9 @@ return {
       },
       setup = {
         tsserver = function(_, opts)
+          if require("neoconf").get("tsserver.disable") then
+            return true
+          end
           require("typescript").setup({ server = opts })
           return true
         end,

@@ -30,7 +30,7 @@ require("lazy").setup({
 
   { import = "main.plugins.dap.core" },
   { import = "main.plugins.lang.react" },
-  { import = "main.plugins.lang.vue" },
+  -- { import = "main.plugins.lang.vue" },
   { import = "main.plugins.lang.svelte" },
   { import = "main.plugins.lang.astro" },
   { import = "main.plugins.lang.tailwind" },

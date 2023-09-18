@@ -85,6 +85,9 @@ return {
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
+      require("neoconf").setup({
+        -- override any of the default settings here
+      })
       local Util = require("util")
 
       -- setup autoformat
@@ -151,6 +154,7 @@ return {
           capabilities = vim.deepcopy(capabilities),
         }, servers[server] or {})
 
+        -- This lets us disable a server by setting it to false in the project config file
         if opts.setup[server] then
           if opts.setup[server](server, server_opts) then
             return
@@ -159,8 +163,6 @@ return {
           if opts.setup["*"](server, server_opts) then
             return
           end
-        elseif require("neoconf").get(server_name .. ".disable") then
-          return
         end
 
         require("lspconfig")[server].setup(server_opts)
