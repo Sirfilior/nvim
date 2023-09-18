@@ -35,6 +35,7 @@ require("lazy").setup({
   { import = "main.plugins.lang.typescript" },
   { import = "main.plugins.lang.python" },
   { import = "main.plugins.lang.php" },
+  -- { import = "main.plugins.lang.flutter" },
 
   { import = "scrap.plugins.vscode" },
   { import = "scrap.plugins.prettier" },
