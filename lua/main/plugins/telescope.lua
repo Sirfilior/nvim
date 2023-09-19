@@ -25,6 +25,17 @@ return {
             },
           },
         },
+        extensions = {
+          fzy_native = {
+            override_generic_sorter = true,
+            override_file_sorter = true,
+          },
+
+          fzf_writer = {
+            use_highlighter = false,
+            minimum_grep_characters = 6,
+          },
+        },
       }
     end,
     config = function(_, opts)
@@ -32,6 +43,7 @@ return {
 
       -- Enable telescope fzf native, if installed
       require("telescope").load_extension("fzf")
+      require("telescope").load_extension("file_browser")
       require("telescope").load_extension("notify")
     end,
     keys = {
@@ -117,6 +129,11 @@ return {
         desc = "[S]earch [D]iagnostics",
       },
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      {
+        "<leader>fe",
+        "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>",
+        desc = "Telescope File Browser",
+      },
     },
   },
 
@@ -132,4 +149,5 @@ return {
       return vim.fn.executable("make") == 1
     end,
   },
+  "nvim-telescope/telescope-file-browser.nvim",
 }
