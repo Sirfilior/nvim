@@ -46,10 +46,12 @@ return {
         "c",
         "cpp",
         "lua",
-        "typescript",
         "vimdoc",
         "vim",
         "javascript",
+        "typescript",
+        "css",
+        "scss",
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
