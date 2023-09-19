@@ -42,4 +42,5 @@ require("lazy").setup({
 
   { import = "scrap.plugins.vscode" },
   { import = "scrap.plugins.prettier" },
+  { import = "scrap.plugins.cellular" },
 }, {})
