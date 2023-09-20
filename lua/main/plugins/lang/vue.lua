@@ -18,6 +18,7 @@ return {
     },
     setup = {
       volar = function(_, opts)
+        -- TODO: Check if this is working
         if not require("neoconf").get("volar.enable") then
           return true
         end
