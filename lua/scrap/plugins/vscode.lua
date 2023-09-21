@@ -33,6 +33,10 @@ vim.keymap.set("n", "<leader>fe", [[<cmd>call VSCodeNotify('workbench.files.acti
 vim.keymap.set("n", "<leader>ft", [[<cmd>call VSCodeNotify('terminal.focus')<cr>]])
 vim.keymap.set("n", "<leader>ca", [[<cmd>call VSCodeNotify('editor.action.quickFix')<cr>]])
 
+-- LSP Settings
+-- editor.action.goToReferences
+vim.keymap.set("n", "<leader>rn", [[<cmd>call VSCodeNotify('editor.action.goToReferences')<cr>]])
+
 vim.api.nvim_set_keymap("x", "gc", "<Plug>VSCodeCommentary", {})
 vim.api.nvim_set_keymap("n", "gc", "<Plug>VSCodeCommentary", {})
 vim.api.nvim_set_keymap("o", "gc", "<Plug>VSCodeCommentary", {})
