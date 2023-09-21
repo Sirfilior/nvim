@@ -54,11 +54,9 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
-        rust_analyzer = {},
         html = {},
         cssls = {},
         jsonls = {},
-        prismals = {},
         eslint = {},
         lua_ls = {
           settings = {
@@ -85,9 +83,7 @@ return {
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      require("neoconf").setup({
-        -- override any of the default settings here
-      })
+      require("neoconf").setup({})
       local Util = require("util")
 
       -- setup autoformat
@@ -154,7 +150,6 @@ return {
           capabilities = vim.deepcopy(capabilities),
         }, servers[server] or {})
 
-        -- This lets us disable a server by setting it to false in the project config file
         if opts.setup[server] then
           if opts.setup[server](server, server_opts) then
             return
