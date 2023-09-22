@@ -45,7 +45,8 @@ function M.get()
 
       { "<leader>cf", format, desc = "Format Document", has = "formatting" },
       { "<leader>cf", format, desc = "Format Range", mode = "v", has = "rangeFormatting" },
-      -- { "<leader>tf", function() require("main.plugins.lsp.format").toggle() end, desc = "[W]orkspace [R]emove Folder" },
+
+      { "<leader>tf", function() require("main.plugins.lsp.format").toggle() end, desc = "[T]oggle [F]ormat" },
 
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
       {

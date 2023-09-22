@@ -25,7 +25,7 @@ return {
         require("telescope").load_extension("flutter")
       end,
       keys = {
-        { "<leader>tf", "<Cmd>Telescope flutter commands<CR>", desc = "Flutter Commands" },
+        { "<leader>fc", "<Cmd>Telescope flutter commands<CR>", desc = "Flutter Commands" },
       },
     },
   },
