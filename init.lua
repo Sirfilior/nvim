@@ -34,6 +34,7 @@ require("lazy").setup({
   { import = "main.plugins.lang.astro" },
   { import = "main.plugins.lang.tailwind" },
   { import = "main.plugins.lang.go" },
+  { import = "main.plugins.lang.rust" },
   { import = "main.plugins.lang.typescript" },
   { import = "main.plugins.lang.python" },
   { import = "main.plugins.lang.php" },
@@ -43,4 +44,5 @@ require("lazy").setup({
   { import = "scrap.plugins.vscode" },
   { import = "scrap.plugins.prettier" },
   { import = "scrap.plugins.cellular" },
+  { import = "scrap.plugins.typo3" },
 }, {})
