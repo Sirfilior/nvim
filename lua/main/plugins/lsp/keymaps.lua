@@ -34,7 +34,6 @@ function M.get()
 
       { "K", vim.lsp.buf.hover, desc = "Hover" },
       { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
-      { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
 
       { "]d", M.diagnostic_goto(true), desc = "Next Diagnostic" },
       { "[d", M.diagnostic_goto(false), desc = "Prev Diagnostic" },

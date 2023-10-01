@@ -52,6 +52,7 @@ return {
         "typescript",
         "css",
         "scss",
+        "markdown",
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
