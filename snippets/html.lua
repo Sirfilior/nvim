@@ -1,5 +1,16 @@
 return {
-  s("fif", fmt('<f:if condition="{()}" /></f:if>', { i(1) }, { delimiters = "()" })),
+  s(
+    "fif",
+    fmt(
+      [[
+  <f:if condition="{()}">
+      ()
+  </f:if>
+  ]],
+      { i(1), i(2) },
+      { delimiters = "()" }
+    )
+  ),
   s(
     "fift",
     fmt(
