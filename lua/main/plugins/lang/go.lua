@@ -7,6 +7,7 @@ return {
         "gomod",
         "gowork",
         "gosum",
+        "templ",
       })
     end,
   },
@@ -14,6 +15,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        templ = {},
         gopls = {
           keys = {
             -- Workaround for the lack of a DAP strategy in neotest-go: https://github.com/nvim-neotest/neotest-go/issues/12

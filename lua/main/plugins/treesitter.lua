@@ -118,6 +118,7 @@ return {
       },
     },
     config = function(_, opts)
+      require("util.tsparser").addCustomParsers()
       if type(opts.ensure_installed) == "table" then
         ---@type table<string, boolean>
         local added = {}
