@@ -50,6 +50,7 @@ return {
         "vim",
         "javascript",
         "typescript",
+        "html",
         "css",
         "scss",
         "markdown",
@@ -80,6 +81,8 @@ return {
             -- You can use the capture groups defined in textobjects.scm
             ["aa"] = "@parameter.outer",
             ["ia"] = "@parameter.inner",
+            ["at"] = { query = "@attribute.outer", desc = "Select outer part of an attribute region" },
+            ["it"] = { query = "@attribute.inner", desc = "Select inner part of an attribute region" },
             ["af"] = "@function.outer",
             ["if"] = "@function.inner",
             ["ac"] = "@class.outer",

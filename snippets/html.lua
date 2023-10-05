@@ -28,4 +28,20 @@ return {
       { delimiters = "()" }
     )
   ),
+  s("fdb", fmt("<f:debug>{()}</f:debug>", { i(1) }, { delimiters = "()" })),
+  s(
+    "fimg",
+    fmt(
+      [[
+  <f:image
+    image="{()}"
+    title="{()}"
+    alt="{()}"
+    width="()"
+  />
+  ]],
+      { i(1), i(2), i(3), i(4) },
+      { delimiters = "()" }
+    )
+  ),
 }
