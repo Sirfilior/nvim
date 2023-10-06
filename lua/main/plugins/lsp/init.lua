@@ -146,6 +146,11 @@ return {
       )
 
       local function setup(server)
+        -- We dont want unconfigured servers..
+        if not servers[server] then
+          return
+        end
+
         local server_opts = vim.tbl_deep_extend("force", {
           capabilities = vim.deepcopy(capabilities),
         }, servers[server] or {})
