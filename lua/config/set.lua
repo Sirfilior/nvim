@@ -7,6 +7,7 @@ vim.g.maplocalleader = " "
 vim.o.hlsearch = false
 vim.opt.incsearch = true
 
+vim.opt.formatoptions = "jcroqlnt"
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.grepprg = "rg --vimgrep"
 
@@ -44,7 +45,6 @@ vim.o.timeoutlen = 300
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menuone,noselect"
 
--- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
 vim.opt.tabstop = 4
@@ -76,12 +76,30 @@ vim.opt.fillchars = {
   eob = " ",
 }
 
+-- Folding
+vim.opt.foldlevel = 99
+vim.opt.foldtext = "v:lua.require'util.ui'.foldtext()"
+-- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
+if vim.fn.has("nvim-0.10") == 1 then
+  vim.opt.foldmethod = "expr"
+  vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+else
+  vim.opt.foldmethod = "indent"
+end
+
 vim.filetype.add({
   extension = {
     mjml = "html",
   },
 })
 
+if vim.fn.has("nvim-0.9.0") == 1 then
+  vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
+end
+
 if vim.fn.has("nvim-0.10") == 1 then
   vim.opt.smoothscroll = true
 end
+--
+-- Unless you are still migrating, remove the deprecated commands from v1.x
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])

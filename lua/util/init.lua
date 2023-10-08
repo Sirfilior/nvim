@@ -17,6 +17,8 @@ function M.on_very_lazy(fn)
   })
 end
 
+M.get_clients = vim.lsp.get_clients or vim.lsp.get_active_clients
+
 ---@param on_attach fun(client, buffer)
 function M.on_attach(on_attach)
   vim.api.nvim_create_autocmd("LspAttach", {

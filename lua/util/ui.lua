@@ -111,7 +111,9 @@ function M.statuscolumn()
     nu = vim.wo[win].relativenumber and vim.v.relnum ~= 0 and vim.v.relnum or vim.v.lnum
   end
 
+  --TODO: CHECK THE SPACE
   return table.concat({
+    " ",
     M.icon(M.get_mark(buf, vim.v.lnum) or left),
     [[%=]],
     nu .. " ",
