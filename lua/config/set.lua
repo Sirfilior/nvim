@@ -7,7 +7,17 @@ vim.g.maplocalleader = " "
 vim.o.hlsearch = false
 vim.opt.incsearch = true
 
-vim.opt.formatoptions = "jcroqlnt"
+vim.opt.formatoptions = vim.opt.formatoptions
+  - "a" -- Auto formatting is BAD.
+  - "t" -- Don't auto format my code. I got linters for that.
+  + "c" -- In general, I like it when comments respect textwidth
+  + "q" -- Allow formatting comments w/ gq
+  - "o" -- O and o, don't continue comments
+  + "r" -- But do continue when pressing enter.
+  + "n" -- Indent past the formatlistpat, not underneath it.
+  + "j" -- Auto-remove comments if possible.
+  - "2" -- I'm not in gradeschool anymore
+
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.grepprg = "rg --vimgrep"
 
@@ -54,7 +64,10 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.breakindent = true
+vim.opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
+vim.opt.linebreak = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -76,16 +89,7 @@ vim.opt.fillchars = {
   eob = " ",
 }
 
--- Folding
-vim.opt.foldlevel = 99
-vim.opt.foldtext = "v:lua.require'util.ui'.foldtext()"
--- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
-if vim.fn.has("nvim-0.10") == 1 then
-  vim.opt.foldmethod = "expr"
-  vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-else
-  vim.opt.foldmethod = "indent"
-end
+vim.opt.modelines = 1
 
 vim.filetype.add({
   extension = {
