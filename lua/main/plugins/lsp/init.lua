@@ -57,7 +57,6 @@ return {
         html = {},
         cssls = {},
         jsonls = {},
-        eslint = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -196,7 +195,7 @@ return {
 
   -- formatters
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
     opts = function()
@@ -204,7 +203,6 @@ return {
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
-          nls.builtins.formatting.prettierd,
           nls.builtins.formatting.fish_indent,
           nls.builtins.diagnostics.fish,
           nls.builtins.formatting.stylua,
