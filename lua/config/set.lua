@@ -5,6 +5,9 @@
 vim.o.hlsearch = false
 vim.opt.incsearch = true
 
+vim.opt.grepformat = "%f:%l:%c:%m"
+vim.opt.grepprg = "rg --vimgrep"
+
 -- Make line numbers default
 vim.wo.number = true
 
@@ -59,7 +62,17 @@ vim.opt.undofile = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
---
+vim.opt.winminwidth = 5 -- Minimum window width
+vim.opt.wrap = false -- Disable line wrap
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  -- fold = "⸱",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
 
 vim.filetype.add({
   extension = {
