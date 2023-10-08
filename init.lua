@@ -42,7 +42,11 @@ require("lazy").setup({
 
   { import = "scrap.plugins.filetree" },
   { import = "scrap.plugins.vscode" },
+
+  { import = "scrap.plugins.conform" },
   { import = "scrap.plugins.prettier" },
+  { import = "scrap.plugins.eslint" },
+
   { import = "scrap.plugins.cellular" },
   { import = "scrap.plugins.typo3" },
 }, {})
