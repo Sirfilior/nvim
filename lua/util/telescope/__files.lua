@@ -23,6 +23,7 @@ files.multi_rg = function(opts)
       ["h"] = "*.html",
       ["r"] = "*.rs",
       ["g"] = "*.go",
+      ["d"] = ".*",
     }
   opts.pattern = opts.pattern or "%s"
 

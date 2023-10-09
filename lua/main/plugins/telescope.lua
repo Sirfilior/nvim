@@ -76,7 +76,7 @@ return {
       {
         "<C-p>",
         function()
-          require("telescope.builtin").git_file()
+          require("telescope.builtin").git_files()
         end,
         desc = "Search [G]it [F]iles",
       },
@@ -90,7 +90,7 @@ return {
       {
         "<leader>sf",
         function()
-          require("telescope.builtin").find_files()
+          require("telescope.builtin").find_files({ hidden = true })
         end,
         desc = "[S]earch [F]iles",
       },
@@ -109,11 +109,18 @@ return {
         desc = "[S]earch current [W]ord",
       },
       {
-        "<leader>sg",
+        "<C-s>",
         function()
           require("util.telescope").multi_rg()
         end,
-        desc = "[S]earch by [G]rep",
+        desc = "[S]earch [G]rep",
+      },
+      {
+        "<leader>ss",
+        function()
+          require("util.telescope").multi_rg()
+        end,
+        desc = "[S]earch [S]tring by [G]rep",
       },
       {
         "<leader>sgh",
