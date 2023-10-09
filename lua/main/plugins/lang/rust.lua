@@ -7,6 +7,11 @@ return {
       {
         "Saecki/crates.nvim",
         event = { "BufRead Cargo.toml" },
+        opts = {
+          popup = {
+            autofocus = true,
+          },
+        },
         config = true,
       },
     },
@@ -62,6 +67,9 @@ return {
       return {
         dap = {
           adapter = adapter,
+        },
+        hover_actions = {
+          auto_focus = true,
         },
         tools = {
           on_initialized = function()
@@ -128,6 +136,17 @@ return {
               end,
               desc = "Show Crate Documentation",
             },
+            {
+              "<C-K>",
+              function()
+                if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+                  require("crates").show_features_popup()
+                else
+                  vim.lsp.buf.hover()
+                end
+              end,
+              desc = "Show Crate Features",
+            },
           },
         },
       },
@@ -140,7 +159,12 @@ return {
       },
     },
   },
-
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      table.insert(opts.sources, require("crates.null-ls").source("crates"))
+    end,
+  },
   {
     "nvim-neotest/neotest",
     optional = true,
