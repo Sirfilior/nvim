@@ -118,6 +118,13 @@ return {
           view = "mini",
         },
       },
+      commands = {
+        all = {
+          view = "split",
+          opts = { enter = true, fomrat = "details" },
+          filter = {},
+        },
+      },
       presets = {
         bottom_search = true,
         command_palette = true,

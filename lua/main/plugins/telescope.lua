@@ -4,6 +4,22 @@ return {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
     cmd = "Telescope",
+    dependencies = {
+      {
+        "debugloop/telescope-undo.nvim",
+        keys = { { "<leader>U", "<cmd>Telescope undo<cr>" } },
+        config = function()
+          require("telescope").load_extension("undo")
+        end,
+      },
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+        config = function()
+          require("telescope").load_extension("fzf")
+        end,
+      },
+    },
     opts = function()
       local trouble = require("trouble.providers.telescope")
       local harpoonAction = require("util.telescope.harpoonAction")
@@ -37,14 +53,6 @@ return {
           },
         },
       }
-    end,
-    config = function(_, opts)
-      require("telescope").setup(opts)
-
-      -- Enable telescope fzf native, if installed
-      require("telescope").load_extension("fzf")
-      -- require("telescope").load_extension("file_browser")
-      require("telescope").load_extension("notify")
     end,
     keys = {
       {
@@ -136,18 +144,4 @@ return {
       -- },
     },
   },
-
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-  -- Only load if `make` is available. Make sure you have the system
-  -- requirements installed.
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    -- NOTE: If you are having trouble with this installation,
-    --       refer to the README for telescope-fzf-native for more instructions.
-    build = "make",
-    cond = function()
-      return vim.fn.executable("make") == 1
-    end,
-  },
-  -- "nvim-telescope/telescope-file-browser.nvim",
 }
