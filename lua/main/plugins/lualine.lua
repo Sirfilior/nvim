@@ -37,7 +37,7 @@ return {
       -- theme.normal.c.bg = "#112233"
       return {
         options = {
-          theme = "kanagawa",
+          theme = "auto",
           globalstatus = true,
           component_separators = "",
           section_separators = "",

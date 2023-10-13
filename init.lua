@@ -40,9 +40,9 @@ require("lazy").setup({
   { import = "main.plugins.lang.php" },
   -- { import = "main.plugins.lang.flutter" },
 
-  { import = "scrap.plugins.vscode" },
-
-  { import = "scrap.plugins.prettier" },
+  { import = "extra.plugins.vscode" },
+  { import = "extra.plugins.prettier" },
+  { import = "extra.plugins.eslint" },
 
   { import = "scrap.plugins.cellular" },
   { import = "scrap.plugins.typo3" },

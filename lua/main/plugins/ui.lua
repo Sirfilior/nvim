@@ -48,6 +48,21 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
   -- ui components
   { "MunifTanjim/nui.nvim", lazy = true },
+
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   priority = 1000,
+  --   opts = { style = "moon" },
+  --   config = function(_, opts)
+  --     require("tokyonight").setup(opts)
+  --     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  --     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  --     vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
+  --     vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+  --     vim.cmd.colorscheme("tokyonight")
+  --   end,
+  -- },
+  --
   {
     "rebelot/kanagawa.nvim",
     name = "kanagawa",
