@@ -61,6 +61,7 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 
 vim.opt.smartindent = true
 
