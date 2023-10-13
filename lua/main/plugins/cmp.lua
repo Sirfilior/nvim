@@ -39,76 +39,26 @@ return {
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
       -- & its associated nvim-cmp source
       "saadparwaiz1/cmp_luasnip",
 
       -- Adds LSP completion capabilities
       "hrsh7th/cmp-nvim-lsp",
-      {
-        "onsails/lspkind-nvim",
-        config = function()
-          local lspkind = require("lspkind")
-          lspkind.init({
-            symbol_map = {
-              Copilot = "",
-            },
-          })
-          vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-        end,
-      },
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
     },
     opts = function()
+      vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
+      local defaults = require("cmp.config.default")()
+
       return {
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
           end,
-        },
-        sorting = {
-          -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-
-            -- copied from cmp-under, but I don't think I need the plugin for this.
-            -- I might add some more of my own.
-            function(entry1, entry2)
-              local _, entry1_under = entry1.completion_item.label:find("^_+")
-              local _, entry2_under = entry2.completion_item.label:find("^_+")
-              entry1_under = entry1_under or 0
-              entry2_under = entry2_under or 0
-              if entry1_under > entry2_under then
-                return false
-              elseif entry1_under < entry2_under then
-                return true
-              end
-            end,
-
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-          },
-        },
-        formatting = {
-          format = require("lspkind").cmp_format({
-            with_text = true,
-            menu = {
-              buffer = "[buf]",
-              nvim_lsp = "[LSP]",
-              nvim_lua = "[api]",
-              path = "[path]",
-              luasnip = "[snip]",
-              gh_issues = "[issues]",
-              tn = "[TabNine]",
-              eruby = "[erb]",
-            },
-          }),
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -147,11 +97,57 @@ return {
         }, {
           { name = "buffer" },
         }),
+        formatting = {
+          format = function(_, item)
+            local icons = require("config.icons").kinds
+            if icons[item.kind] then
+              item.kind = icons[item.kind] .. item.kind
+            end
+            return item
+          end,
+        },
+        experimental = {
+          ghost_text = {
+            hl_group = "CmpGhostText",
+          },
+        },
+        sorting = defaults.sorting,
+        -- sorting = {
+        --   -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+        --   comparators = {
+        --     cmp.config.compare.offset,
+        --     cmp.config.compare.exact,
+        --     cmp.config.compare.score,
+        --
+        --     -- copied from cmp-under, but I don't think I need the plugin for this.
+        --     -- I might add some more of my own.
+        --     function(entry1, entry2)
+        --       local _, entry1_under = entry1.completion_item.label:find("^_+")
+        --       local _, entry2_under = entry2.completion_item.label:find("^_+")
+        --       entry1_under = entry1_under or 0
+        --       entry2_under = entry2_under or 0
+        --       if entry1_under > entry2_under then
+        --         return false
+        --       elseif entry1_under < entry2_under then
+        --         return true
+        --       end
+        --     end,
+        --
+        --     cmp.config.compare.kind,
+        --     cmp.config.compare.sort_text,
+        --     cmp.config.compare.length,
+        --     cmp.config.compare.order,
+        --   },
+        -- },
       }
     end,
     config = function(_, opts)
       local cmp = require("cmp")
+      for _, source in ipairs(opts.sources) do
+        source.group_index = source.group_index or 1
+      end
       cmp.setup(opts)
+      --
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
@@ -169,21 +165,6 @@ return {
           { name = "cmdline" },
         }),
       })
-    end,
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
     end,
   },
 }

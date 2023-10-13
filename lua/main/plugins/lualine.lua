@@ -24,6 +24,12 @@ return {
       local icons = require("config.icons")
       local Util = require("util")
       local Lualine = require("util.lualine")
+      local colors = {
+        [""] = Util.fg("Special"),
+        ["Normal"] = Util.fg("Special"),
+        ["Warning"] = Util.fg("DiagnosticError"),
+        ["InProgress"] = Util.fg("DiagnosticWarn"),
+      }
 
       vim.o.laststatus = vim.g.lualine_laststatus
       -- local getPalette = require("catppuccin.util.lualine")
@@ -96,6 +102,30 @@ return {
                 return package.loaded["noice"] and require("noice").api.status.mode.has()
               end,
               color = Util.fg("Constant"),
+            },
+            {
+              function()
+                local icon = require("config.icons").kinds.Copilot
+                local status = require("copilot.api").status.data
+                return icon .. (status.message or "")
+              end,
+              cond = function()
+                if not package.loaded["copilot"] then
+                  return
+                end
+                local ok, clients = pcall(require("util").lsp.get_clients, { name = "copilot", bufnr = 0 })
+                if not ok then
+                  return false
+                end
+                return ok and #clients > 0
+              end,
+              color = function()
+                if not package.loaded["copilot"] then
+                  return
+                end
+                local status = require("copilot.api").status.data
+                return colors[status.status] or colors[""]
+              end,
             },
             {
               function()
