@@ -63,7 +63,7 @@ return {
         gopls = function(_, opts)
           -- workaround for gopls not supporting semanticTokensProvider
           -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
-          require("util").on_attach(function(client, _)
+          require("util").lsp.on_attach(function(client, _)
             if client.name == "gopls" then
               if not client.server_capabilities.semanticTokensProvider then
                 local semantic = client.config.capabilities.textDocument.semanticTokens
@@ -85,6 +85,15 @@ return {
   },
   -- Ensure Go tools are installed
   {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        go = { "goimports", "gofumpt" },
+      },
+    },
+  },
+  {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
       if type(opts.sources) == "table" then
@@ -92,8 +101,6 @@ return {
         vim.list_extend(opts.sources, {
           nls.builtins.code_actions.gomodifytags,
           nls.builtins.code_actions.impl,
-          nls.builtins.formatting.gofumpt,
-          nls.builtins.formatting.goimports_reviser,
         })
       end
     end,

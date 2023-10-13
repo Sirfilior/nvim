@@ -25,7 +25,10 @@ require("lazy").setup({
 
   { import = "main.plugins" },
 
+  { import = "main.setup" },
+
   { import = "main.plugins.dap.core" },
+
   { import = "main.plugins.lang.react" },
   { import = "main.plugins.lang.svelte" },
   { import = "main.plugins.lang.astro" },
@@ -37,12 +40,9 @@ require("lazy").setup({
   { import = "main.plugins.lang.php" },
   -- { import = "main.plugins.lang.flutter" },
 
-  { import = "scrap.plugins.filetree" },
   { import = "scrap.plugins.vscode" },
 
-  { import = "scrap.plugins.conform" },
   { import = "scrap.plugins.prettier" },
-  { import = "scrap.plugins.eslint" },
 
   { import = "scrap.plugins.cellular" },
   { import = "scrap.plugins.typo3" },

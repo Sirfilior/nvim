@@ -1,4 +1,36 @@
+local LazyUtil = require("lazy.core.util")
+
 local M = {}
+
+setmetatable(M, {
+  __index = function(t, k)
+    if LazyUtil[k] then
+      return LazyUtil[k]
+    end
+    ---@diagnostic disable-next-line: no-unknown
+    t[k] = require("util." .. k)
+    return t[k]
+  end,
+})
+
+---@param name string
+---@param fn fun(name:string)
+function M.on_load(name, fn)
+  local Config = require("lazy.core.config")
+  if Config.plugins[name] and Config.plugins[name]._.loaded then
+    fn(name)
+  else
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "LazyLoad",
+      callback = function(event)
+        if event.data == name then
+          fn(name)
+          return true
+        end
+      end,
+    })
+  end
+end
 
 function M.fg(name)
   ---@type {foreground?:number}?
@@ -13,19 +45,6 @@ function M.on_very_lazy(fn)
     pattern = "VeryLazy",
     callback = function()
       fn()
-    end,
-  })
-end
-
-M.get_clients = vim.lsp.get_clients or vim.lsp.get_active_clients
-
----@param on_attach fun(client, buffer)
-function M.on_attach(on_attach)
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-      local buffer = args.buf
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      on_attach(client, buffer)
     end,
   })
 end

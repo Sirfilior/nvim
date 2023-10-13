@@ -6,14 +6,6 @@ return {
     end,
   },
   {
-    "nvimtools/none-ls.nvim",
-    optional = true,
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      table.insert(opts.sources, nls.builtins.formatting.prettierd)
-    end,
-  },
-  {
     "stevearc/conform.nvim",
     optional = true,
     opts = {

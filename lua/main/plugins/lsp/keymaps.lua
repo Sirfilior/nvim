@@ -5,9 +5,6 @@ M._keys = nil
 
 ---@return (LazyKeys|{has?:string})[]
 function M.get()
-  local format = function()
-    require("main.plugins.lsp.format").format({ force = true })
-  end
 
   if not M._keys then
   ---@class PluginLspKeys
@@ -42,11 +39,6 @@ function M.get()
       { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev Error" },
       { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next Warning" },
       { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
-
-      { "<leader>cf", format, desc = "Format Document", has = "formatting" },
-      { "<leader>cf", format, desc = "Format Range", mode = "v", has = "rangeFormatting" },
-
-      { "<leader>tf", function() require("main.plugins.lsp.format").toggle() end, desc = "[T]oggle [F]ormat" },
 
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
       {
@@ -86,7 +78,7 @@ end
 ---@param method string
 function M.has(buffer, method)
   method = method:find("/") and method or "textDocument/" .. method
-  local clients = require("util").get_clients({ bufnr = buffer })
+  local clients = require("util").lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
     if client.supports_method(method) then
       return true
@@ -103,7 +95,7 @@ function M.resolve(buffer)
   end
   local spec = M.get()
   local opts = require("util").opts("nvim-lspconfig")
-  local clients = require("util").get_clients({ bufnr = buffer })
+  local clients = require("util").lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
     local maps = opts.servers[client.name] and opts.servers[client.name].keys or {}
     vim.list_extend(spec, maps)

@@ -109,13 +109,6 @@ return {
         mode = { "x" },
         noremap = true,
       },
-      {
-        "<leader>ss",
-        function()
-          require("substitute.range").word()
-        end,
-        noremap = true,
-      },
     },
     config = function()
       require("substitute").setup({})

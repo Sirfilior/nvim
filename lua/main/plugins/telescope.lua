@@ -116,13 +116,6 @@ return {
         desc = "[S]earch [G]rep",
       },
       {
-        "<leader>ss",
-        function()
-          require("util.telescope").multi_rg()
-        end,
-        desc = "[S]earch [S]tring by [G]rep",
-      },
-      {
         "<leader>sgh",
         function()
           require("telescope.builtin").live_grep({ additional_args = { "--hidden" } })
@@ -144,11 +137,15 @@ return {
         desc = "[S]earch [D]iagnostics",
       },
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-      -- {
-      --   "<leader>fe",
-      --   "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>",
-      --   desc = "Telescope File Browser",
-      -- },
+      {
+        "<leader>sS",
+        function()
+          require("telescope.builtin").lsp_dynamic_workspace_symbols({
+            symbols = require("util").ui.get_kind_filter(),
+          })
+        end,
+        desc = "Goto Symbol (Workspace)",
+      },
     },
   },
 }

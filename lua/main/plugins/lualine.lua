@@ -2,14 +2,30 @@ return {
   {
     -- Set lualine as statusline
     "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
     -- See `:help lualine.txt`
     dependencies = {
       { "nvim-tree/nvim-web-devicons", opt = true },
     },
+    init = function()
+      vim.g.lualine_laststatus = vim.o.laststatus
+      if vim.fn.argc(-1) > 0 then
+        -- set an empty statusline till lualine loads
+        vim.o.statusline = " "
+      else
+        -- hide the statusline on the starter page
+        vim.o.laststatus = 0
+      end
+    end,
     opts = function()
+      local lualine_require = require("lualine_require")
+      lualine_require.require = require
+
       local icons = require("config.icons")
       local Util = require("util")
       local Lualine = require("util.lualine")
+
+      vim.o.laststatus = vim.g.lualine_laststatus
       -- local getPalette = require("catppuccin.util.lualine")
       -- local theme = getPalette("macchiato")
       -- theme.normal.c.bg = "#112233"
@@ -35,14 +51,31 @@ return {
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
             {
               function()
-                return require("nvim-navic").get_location()
+                return Util.root.pretty_path()
               end,
-              cond = function()
-                return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
-              end,
+            },
+            {
+              "aerial",
+              sep = " ", -- separator between symbols
+              sep_icon = "", -- separator between icon and symbol
+
+              -- The number of symbols to render top-down. In order to render only 'N' last
+              -- symbols, negative numbers may be supplied. For instance, 'depth = -1' can
+              -- be used in order to render only current symbol.
+              depth = 5,
+
+              -- When 'dense' mode is on, icons are not rendered near their symbols. Only
+              -- a single icon that represents the kind of current symbol is rendered at
+              -- the beginning of status line.
+              dense = false,
+
+              -- The separator to be used to separate symbols in dense mode.
+              dense_sep = ".",
+
+              -- Color the symbol icons.
+              colored = true,
             },
           },
           lualine_x = {

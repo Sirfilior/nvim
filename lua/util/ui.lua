@@ -121,4 +121,14 @@ function M.statuscolumn()
   }, "")
 end
 
+function M.get_kind_filter(buf)
+  local kind_filter = require("config").icons.kind_filter
+  buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
+  local ft = vim.bo[buf].filetype
+  if kind_filter == false then
+    return
+  end
+  return kind_filter[ft] or kind_filter.default
+end
+
 return M

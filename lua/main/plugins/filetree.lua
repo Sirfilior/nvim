@@ -1,30 +1,42 @@
+local Util = require("util")
+
 return {
   "nvim-neo-tree/neo-tree.nvim",
   version = "*",
   cmd = "Neotree",
   keys = {
     {
+      "<leader>fE",
+      function()
+        require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
+      end,
+      desc = "[F]ile Tree [E]xplorer NeoTree (root)",
+    },
+    {
       "<leader>fe",
       function()
-        require("neo-tree.command").execute({ toggle = true, reveal = true })
+        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
       end,
       desc = "[F]ile Tree [E]xplorer NeoTree (cwd)",
     },
     {
-      "<leader>fl",
+      "<leader>ge",
       function()
-        require("neo-tree.command").execute({ toggle = true, reveal = true, position = "left" })
+        require("neo-tree.command").execute({ source = "git_status", toggle = true })
       end,
-      desc = "[F]ile Tree Explorer NeoTree [L]eft (cwd)",
+      desc = "Git explorer",
     },
     {
-      "<leader>ff",
+      "<leader>be",
       function()
-        require("neo-tree.command").execute({ toggle = true, reveal = true, position = "float" })
+        require("neo-tree.command").execute({ source = "buffers", toggle = true })
       end,
-      desc = "[F]ile Tree Explorer NeoTree [F]loat (cwd)",
+      desc = "Buffer explorer",
     },
   },
+  deactivate = function()
+    vim.cmd([[Neotree close]])
+  end,
   init = function()
     if vim.fn.argc() == 1 then
       local stat = vim.loop.fs_stat(vim.fn.argv(0))
@@ -34,6 +46,8 @@ return {
     end
   end,
   opts = {
+    sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+    open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
     window = {
       width = 50,
       position = "current",
@@ -60,6 +74,9 @@ return {
       },
     },
     filesystem = {
+      bind_to_cwd = false,
+      follow_current_file = { enabled = true },
+      use_libuv_file_watcher = true,
       filtered_items = {
         hide_hidden = false,
         hide_dotfiles = false,
@@ -116,6 +133,17 @@ return {
     },
   },
   config = function(_, opts)
+    local function on_move(data)
+      Util.lsp.on_rename(data.source, data.destination)
+    end
+
+    local events = require("neo-tree.events")
+    opts.event_handlers = opts.event_handlers or {}
+    vim.list_extend(opts.event_handlers, {
+      { event = events.FILE_MOVED, handler = on_move },
+      { event = events.FILE_RENAMED, handler = on_move },
+    })
+
     require("neo-tree").setup(opts)
     vim.api.nvim_create_autocmd("TermClose", {
       pattern = "*lazygit",

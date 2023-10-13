@@ -86,9 +86,9 @@ return {
       local Util = require("util")
 
       -- setup autoformat
-      require("main.plugins.lsp.format").setup(opts)
+      Util.format.register(Util.lsp.formatter())
       -- setup formatting and keymaps
-      Util.on_attach(function(client, buffer)
+      Util.lsp.on_attach(function(client, buffer)
         require("main.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
@@ -113,7 +113,7 @@ return {
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
       if opts.inlay_hints.enabled and inlay_hint then
-        Util.on_attach(function(client, buffer)
+        Util.lsp.on_attach(function(client, buffer)
           if client.supports_method("textDocument/inlayHint") then
             inlay_hint(buffer, true)
           end
@@ -190,24 +190,6 @@ return {
       if have_mason then
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
-    end,
-  },
-
-  -- formatters
-  {
-    "nvimtools/none-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason.nvim" },
-    opts = function()
-      local nls = require("null-ls")
-      return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-        sources = {
-          nls.builtins.formatting.stylua,
-          nls.builtins.formatting.shfmt,
-          require("typescript.extensions.null-ls.code-actions"),
-        },
-      }
     end,
   },
 
