@@ -53,8 +53,12 @@ return {
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
+      local defaults = require("cmp.config.default")()
 
       return {
+        completion = {
+          completeopt = "menu,menuone,noinsert",
+        },
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -66,7 +70,7 @@ return {
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete({}),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<S-CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -80,7 +84,7 @@ return {
           { name = "nvim_lua" },
           { name = "nvim_lsp" },
           { name = "luasnip" }, -- For luasnip users.
-          { name = "copilot" },
+          { name = "copilot", group_index = 1, priority = 100 },
         }, {
           { name = "buffer" },
         }),
@@ -98,33 +102,34 @@ return {
             hl_group = "CmpGhostText",
           },
         },
-        sorting = {
-          -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-
-            -- copied from cmp-under, but I don't think I need the plugin for this.
-            -- I might add some more of my own.
-            function(entry1, entry2)
-              local _, entry1_under = entry1.completion_item.label:find("^_+")
-              local _, entry2_under = entry2.completion_item.label:find("^_+")
-              entry1_under = entry1_under or 0
-              entry2_under = entry2_under or 0
-              if entry1_under > entry2_under then
-                return false
-              elseif entry1_under < entry2_under then
-                return true
-              end
-            end,
-
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-          },
-        },
+        sorting = defaults.sorting,
+        -- sorting = {
+        --   -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+        --   comparators = {
+        --     cmp.config.compare.offset,
+        --     cmp.config.compare.exact,
+        --     cmp.config.compare.score,
+        --
+        --     -- copied from cmp-under, but I don't think I need the plugin for this.
+        --     -- I might add some more of my own.
+        --     function(entry1, entry2)
+        --       local _, entry1_under = entry1.completion_item.label:find("^_+")
+        --       local _, entry2_under = entry2.completion_item.label:find("^_+")
+        --       entry1_under = entry1_under or 0
+        --       entry2_under = entry2_under or 0
+        --       if entry1_under > entry2_under then
+        --         return false
+        --       elseif entry1_under < entry2_under then
+        --         return true
+        --       end
+        --     end,
+        --
+        --     cmp.config.compare.kind,
+        --     cmp.config.compare.sort_text,
+        --     cmp.config.compare.length,
+        --     cmp.config.compare.order,
+        --   },
+        -- },
       }
     end,
     config = function(_, opts)

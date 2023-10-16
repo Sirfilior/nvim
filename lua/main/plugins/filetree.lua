@@ -20,6 +20,13 @@ return {
       desc = "[F]ile Tree [E]xplorer NeoTree (cwd)",
     },
     {
+      "<leader>fl",
+      function()
+        require("neo-tree.command").execute({ toggle = true, position = "left", reveal = true })
+      end,
+      desc = "[F]ile Tree [E]xplorer [L]eft NeoTree (cwd)",
+    },
+    {
       "<leader>ge",
       function()
         require("neo-tree.command").execute({ source = "git_status", toggle = true })
