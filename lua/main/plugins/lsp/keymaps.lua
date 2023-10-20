@@ -5,7 +5,6 @@ M._keys = nil
 
 ---@return (LazyKeys|{has?:string})[]
 function M.get()
-
   if not M._keys then
   ---@class PluginLspKeys
     -- stylua: ignore
@@ -55,24 +54,12 @@ function M.get()
         end,
         desc = "Source Action",
         has = "codeAction",
-      }
+      },
+      { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
     }
-    if require("util").has("inc-rename.nvim") then
-      M._keys[#M._keys + 1] = {
-        "<leader>rn",
-        function()
-          local inc_rename = require("inc_rename")
-          return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-        end,
-        expr = true,
-        desc = "Rename",
-        has = "rename",
-      }
-    else
-      M._keys[#M._keys + 1] = { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
-    end
+
+    return M._keys
   end
-  return M._keys
 end
 
 ---@param method string
