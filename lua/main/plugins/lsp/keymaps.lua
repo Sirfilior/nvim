@@ -40,6 +40,7 @@ function M.get()
       { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
 
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
+      { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
       {
         "<leader>cA",
         function()
@@ -55,11 +56,9 @@ function M.get()
         desc = "Source Action",
         has = "codeAction",
       },
-      { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
     }
-
-    return M._keys
   end
+  return M._keys
 end
 
 ---@param method string
