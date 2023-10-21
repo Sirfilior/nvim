@@ -4,6 +4,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter-context",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
     build = ":TSUpdate",
@@ -140,11 +141,5 @@ return {
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
-  },
-  { "nvim-treesitter/nvim-treesitter-context" },
-  {
-    "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
-    opts = {},
   },
 }
