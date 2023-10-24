@@ -23,7 +23,6 @@ return {
 
       local icons = require("config.icons")
       local Util = require("util")
-      local Lualine = require("util.lualine")
       local colors = {
         [""] = Util.fg("Special"),
         ["Normal"] = Util.fg("Special"),
@@ -45,8 +44,9 @@ return {
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch", { Lualine.harpoon_component } },
+          lualine_b = { "branch" },
           lualine_c = {
+            Util.lualine.root_dir(),
             {
               "diagnostics",
               symbols = {
@@ -56,12 +56,9 @@ return {
                 hint = icons.diagnostics.Hint,
               },
             },
+            { Util.lualine.harpoon_component },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            {
-              function()
-                return Util.root.pretty_path()
-              end,
-            },
+            { Util.lualine.pretty_path() },
             {
               "aerial",
               sep = " ", -- separator between symbols

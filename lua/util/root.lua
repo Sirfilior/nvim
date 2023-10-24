@@ -58,6 +58,10 @@ function M.bufpath(buf)
   return M.realpath(vim.api.nvim_buf_get_name(assert(buf)))
 end
 
+function M.cwd()
+  return M.realpath(vim.loop.cwd()) or ""
+end
+
 function M.realpath(path)
   if path == "" or path == nil then
     return nil
@@ -133,48 +137,40 @@ function M.info()
   return roots[1] and roots[1].paths[1] or vim.loop.cwd()
 end
 
+---@type table<number, string>
+M.cache = {}
+
+function M.setup()
+  vim.api.nvim_create_user_command("LazyRoot", function()
+    Util.root.info()
+  end, { desc = "LazyVim roots for the current buffer" })
+
+  vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost" }, {
+    group = vim.api.nvim_create_augroup("lazyvim_root_cache", { clear = true }),
+    callback = function(event)
+      M.cache[event.buf] = nil
+    end,
+  })
+end
+
 -- returns the root directory based on:
 -- * lsp workspace folders
 -- * lsp root_dir
 -- * root pattern of filename of the current buffer
 -- * root pattern of cwd
+---@param opts? {normalize?:boolean}
 ---@return string
-function M.get()
-  local roots = M.detect({ all = false })
-  return roots[1] and roots[1].paths[1] or vim.loop.cwd()
-end
-
-M.pretty_cache = {} ---@type table<string, string>
-function M.pretty_path()
-  local path = vim.fn.expand("%:p") --[[@as string]]
-  if path == "" then
-    return ""
+function M.get(opts)
+  local buf = vim.api.nvim_get_current_buf()
+  local ret = M.cache[buf]
+  if not ret then
+    local roots = M.detect({ all = false })
+    ret = roots[1] and roots[1].paths[1] or vim.loop.cwd()
+    M.cache[buf] = ret
   end
-
-  path = Util.norm(path)
-  if M.pretty_cache[path] then
-    return M.pretty_cache[path]
+  if opts and opts.normalize then
+    return ret
   end
-  local cache_key = path
-  local cwd = M.realpath(vim.loop.cwd()) or ""
-
-  if path:find(cwd, 1, true) == 1 then
-    path = path:sub(#cwd + 2)
-  else
-    local roots = M.detect({ spec = { ".git" } })
-    local root = roots[1] and roots[1].paths[1] or nil
-    if root then
-      path = path:sub(#vim.fs.dirname(root) + 2)
-    end
-  end
-
-  local sep = package.config:sub(1, 1)
-  local parts = vim.split(path, "[\\/]")
-  if #parts > 3 then
-    parts = { parts[1], "…", parts[#parts - 1], parts[#parts] }
-  end
-  local ret = table.concat(parts, sep)
-  M.pretty_cache[cache_key] = ret
   return ret
 end
 
