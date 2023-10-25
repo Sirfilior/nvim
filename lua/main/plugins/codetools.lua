@@ -58,9 +58,6 @@ return {
   },
   {
     "kylechui/nvim-surround",
-    config = function()
-      require("nvim-surround").setup({})
-    end,
   },
   {
     "gbprod/substitute.nvim",
@@ -110,9 +107,6 @@ return {
         noremap = true,
       },
     },
-    config = function()
-      require("substitute").setup({})
-    end,
   },
   -- TOO SLOW FOR NOW
   -- {
