@@ -55,6 +55,7 @@ return {
       ---@type lspconfig.options
       servers = {
         html = {},
+        emmet_ls = {},
         cssls = {},
         jsonls = {},
         lua_ls = {

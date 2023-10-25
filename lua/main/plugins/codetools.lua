@@ -107,6 +107,9 @@ return {
         noremap = true,
       },
     },
+    config = function()
+      require("substitute").setup({})
+    end,
   },
   -- TOO SLOW FOR NOW
   -- {
