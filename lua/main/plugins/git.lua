@@ -78,8 +78,11 @@ return {
   -- better diffing
   {
     "sindrets/diffview.nvim",
-    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
     config = true,
-    keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" },
+      { "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", desc = "DiffView current File" },
+    },
   },
 }
