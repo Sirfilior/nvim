@@ -39,7 +39,7 @@ return {
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       -- & its associated nvim-cmp source
       "saadparwaiz1/cmp_luasnip",
