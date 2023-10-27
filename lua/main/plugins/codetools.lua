@@ -82,13 +82,13 @@ return {
     end,
     opts = {
       mappings = {
-        add = "gsa", -- Add surrounding in Normal and Visual modes
-        delete = "gsd", -- Delete surrounding
-        find = "gsf", -- Find surrounding (to the right)
-        find_left = "gsF", -- Find surrounding (to the left)
-        highlight = "gsh", -- Highlight surrounding
-        replace = "gsr", -- Replace surrounding
-        update_n_lines = "gsn", -- Update `n_lines`
+        add = "<leader>sa", -- Add surrounding in Normal and Visual modes
+        delete = "<leader>sd", -- Delete surrounding
+        find = "<leader>sf", -- Find surrounding (to the right)
+        find_left = "<leader>sF", -- Find surrounding (to the left)
+        highlight = "<leader>sh", -- Highlight surrounding
+        replace = "<leader>sr", -- Replace surrounding
+        update_n_lines = "<leader>sn", -- Update `n_lines`
       },
     },
   },
@@ -173,13 +173,6 @@ return {
         noremap = true,
       },
       {
-        "<leader>rs",
-        function()
-          require("substitute").line()
-        end,
-        noremap = true,
-      },
-      {
         "<leader>R",
         function()
           require("substitute").eol()
@@ -190,21 +183,6 @@ return {
         "<leader>r",
         function()
           require("substitute").visual()
-        end,
-        mode = { "x" },
-        noremap = true,
-      },
-      {
-        "<leader>s",
-        function()
-          require("substitute.range").opeartor()
-        end,
-        noremap = true,
-      },
-      {
-        "<leader>s",
-        function()
-          require("substitute.range").visual()
         end,
         mode = { "x" },
         noremap = true,
