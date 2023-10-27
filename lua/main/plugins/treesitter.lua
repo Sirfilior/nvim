@@ -88,21 +88,6 @@ return {
         enable = true,
       },
       textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["ar"] = { query = "@attribute.outer", desc = "Select outer part of an attribute region" },
-            ["ir"] = { query = "@attribute.inner", desc = "Select inner part of an attribute region" },
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-          },
-        },
         move = {
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
