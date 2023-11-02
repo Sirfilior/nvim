@@ -45,6 +45,19 @@ return {
         sidebars = "transparent",
         floats = "transparent",
       },
+      on_colors = function(colors)
+        local blend = require("tokyonight.util").blend
+        colors.git = {
+          change = blend(colors.blue, colors.bg, "ee"),
+          add = blend(colors.green, colors.bg, "ee"),
+          delete = blend(colors.red, colors.bg, "dd"),
+        }
+        colors.gitSigns = {
+          change = blend(colors.blue, colors.bg, "ee"),
+          add = blend(colors.green, colors.bg, "ee"),
+          delete = blend(colors.red, colors.bg, "ee"),
+        }
+      end,
     },
     config = function(_, opts)
       require("tokyonight").setup(opts)
