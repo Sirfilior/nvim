@@ -12,7 +12,7 @@ return {
     opts = { open_cmd = "noswapfile vnew" },
 		-- stylua: ignore
 		keys = {
-			{ "<leader>sR", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+			{ "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
 		},
   },
   -- Finds and lists all of the TODO, HACK, BUG, etc comment
@@ -82,13 +82,13 @@ return {
     end,
     opts = {
       mappings = {
-        add = "<leader>sa", -- Add surrounding in Normal and Visual modes
-        delete = "<leader>sd", -- Delete surrounding
-        find = "<leader>sf", -- Find surrounding (to the right)
-        find_left = "<leader>sF", -- Find surrounding (to the left)
-        highlight = "<leader>sh", -- Highlight surrounding
-        replace = "<leader>sr", -- Replace surrounding
-        update_n_lines = "<leader>sn", -- Update `n_lines`
+        -- Add surrounding in Normal and Visual modes, add = "<leader>sa"
+        delete = "<leader>md", -- Delete surrounding
+        find = "<leader>mf", -- Find surrounding (to the left)
+        find_left = "<leader>mF", -- Find surrounding (to the right)
+        highlight = "<leader>mh", -- Highlight surrounding
+        replace = "<leader>mr", -- Replace surrounding
+        update_n_lines = "<leader>mn", -- Update `n_lines`
       },
     },
   },
