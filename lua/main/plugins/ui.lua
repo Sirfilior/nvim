@@ -30,42 +30,32 @@ return {
       wk.register(opts.defaults)
     end,
   },
-  -- {
-  --   "norcalli/nvim-colorizer.lua",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("colorizer").setup({
-  --       "css",
-  --       "scss",
-  --       "javascript",
-  --       html = {
-  --         mode = "foreground",
-  --       },
-  --     })
-  --   end,
-  -- },
   -- icons
   { "nvim-tree/nvim-web-devicons", lazy = true },
   -- ui components
   { "MunifTanjim/nui.nvim", lazy = true },
 
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   priority = 1000,
-  --   opts = { style = "moon" },
-  --   config = function(_, opts)
-  --     require("tokyonight").setup(opts)
-  --     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  --     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-  --     vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
-  --     vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
-  --     vim.cmd.colorscheme("tokyonight")
-  --   end,
-  -- },
-  --
+  {
+    "folke/tokyonight.nvim",
+    priority = 1000,
+    opts = {
+      style = "moon",
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+    config = function(_, opts)
+      require("tokyonight").setup(opts)
+      vim.cmd.colorscheme("tokyonight")
+    end,
+  },
+
   {
     "rebelot/kanagawa.nvim",
     name = "kanagawa",
+    enabled = false,
     priority = 1000,
     opts = {
       compile = false, -- enable compiling the colorscheme
@@ -194,51 +184,52 @@ return {
     end,
   },
 
-  -- {
-  --   "catppuccin/nvim",
-  --   name = "catppuccin",
-  --   priority = 1000,
-  --   opts = {
-  --     flavour = "macchiato", -- latte, frappe, macchiato, mocha
-  --     transparent_background = true, -- disables setting the background color.
-  --     color_overrides = {},
-  --     custom_highlights = {},
-  --     integrations = {
-  --       alpha = true,
-  --       cmp = true,
-  --       gitsigns = true,
-  --       nvimtree = true,
-  --       telescope = true,
-  --       treesitter = true,
-  --       mason = true,
-  --       neotree = true,
-  --       which_key = true,
-  --       noice = true,
-  --       notify = true,
-  --       native_lsp = {
-  --         enabled = true,
-  --         underlines = {
-  --           errors = { "undercurl" },
-  --           hints = { "undercurl" },
-  --           warnings = { "undercurl" },
-  --           information = { "undercurl" },
-  --         },
-  --       },
-  --       navic = { enabled = true, custom_bg = "lualine" },
-  --       lsp_trouble = true,
-  --       dap = {
-  --         enabled = true,
-  --         enable_ui = true, -- enable nvim-dap-ui
-  --       },
-  --       -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-  --     },
-  --   },
-  --   config = function(_, opts)
-  --     require("catppuccin").setup(opts)
-  --     vim.cmd.colorscheme("catppuccin-macchiato")
-  --     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  --     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-  --     vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
-  --   end,
-  -- },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    enabled = false,
+    priority = 1000,
+    opts = {
+      flavour = "macchiato", -- latte, frappe, macchiato, mocha
+      transparent_background = true, -- disables setting the background color.
+      color_overrides = {},
+      custom_highlights = {},
+      integrations = {
+        alpha = true,
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        telescope = true,
+        treesitter = true,
+        mason = true,
+        neotree = true,
+        which_key = true,
+        noice = true,
+        notify = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+          },
+        },
+        navic = { enabled = true, custom_bg = "lualine" },
+        lsp_trouble = true,
+        dap = {
+          enabled = true,
+          enable_ui = true, -- enable nvim-dap-ui
+        },
+        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+      },
+    },
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+      vim.cmd.colorscheme("catppuccin-macchiato")
+      vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
+    end,
+  },
 }
