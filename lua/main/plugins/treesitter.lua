@@ -57,8 +57,7 @@ return {
         "bash",
         "json",
         "jsonc",
-        "c",
-        "cpp",
+        "yaml",
         "lua",
         "vimdoc",
         "vim",
@@ -67,7 +66,6 @@ return {
         "html",
         "css",
         "scss",
-        "markdown",
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)

@@ -39,6 +39,10 @@ require("lazy").setup({
   { import = "main.plugins.lang.python" },
   { import = "main.plugins.lang.php" },
   -- { import = "main.plugins.lang.flutter" },
+  { import = "main.plugins.lang.docker" },
+  { import = "main.plugins.lang.clangd" },
+  { import = "main.plugins.lang.cmake" },
+  { import = "main.plugins.lang.markdown" },
 
   { import = "extra.plugins.vscode" },
   { import = "extra.plugins.prettier" },
