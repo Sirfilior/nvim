@@ -170,10 +170,10 @@ return {
           -- stylua: ignore
           center = {
             { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "f" },
+            { action = function () require("util.telescope").multi_rg() end,       desc = " Search",          icon = " ", key = "s" },
             { action = "Neotree",                                                  desc = " Tree",            icon = "󰒲 ", key = "t" },
             { action = "ene | startinsert",                                        desc = " New file",        icon = " ", key = "n" },
             { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
-            { action = "Telescope live_grep",                                      desc = " Find text",       icon = " ", key = "g" },
             { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
             { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
           },
