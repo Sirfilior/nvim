@@ -1,5 +1,4 @@
 local Util = require("util")
-local LazyUtil = require("lazy.core.util")
 
 local M = {}
 
@@ -65,10 +64,12 @@ return {
     end,
     opts = function()
       ---@class ConformOpts
-      return {
+      local opts = {
         -- LazyVim will use these options when formatting with the conform.nvim formatter
         format = {
-          timeout_ms = 1000,
+          timeout_ms = 3000,
+          async = false,
+          quiet = false,
         },
         formatters_by_ft = {
           lua = { "stylua" },
@@ -92,6 +93,7 @@ return {
           -- },
         },
       }
+      return opts
     end,
     config = M.setup,
   },
