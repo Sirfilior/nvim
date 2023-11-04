@@ -29,6 +29,7 @@ return {
     )
   ),
   s("fdb", fmt("<f:debug>{()}</f:debug>", { i(1) }, { delimiters = "()" })),
+  s("fifi", fmt("{f:if(condition: '{[]}', then: '[]')}", { i(1), i(2) }, { delimiters = "[]" })),
   s(
     "fimg",
     fmt(
