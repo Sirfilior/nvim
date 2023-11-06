@@ -18,9 +18,6 @@ return {
       require("nvim-treesitter.query_predicates")
     end,
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    keys = {
-      -- Diagnostic keymaps
-    },
     opts = {
       -- Add languages to be installed here that you want installed for treesitter
       ensure_installed = {

@@ -19,7 +19,7 @@ return {
       end,
       desc = "[F]ile Tree [E]xplorer NeoTree (cwd)",
     },
-    { "<leader>e", "<leader>fe", desc = "[F]ile Tree Root", remap = true },
+    { "<leader>e", "<leader>fe", desc = "[F]ile Tree [E]xplorer NeoTree (root)", remap = true },
     { "<leader>E", "<leader>fE", desc = "[F]ile Tree Root", remap = true },
     {
       "<leader>fl",
