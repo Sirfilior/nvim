@@ -6,19 +6,21 @@ return {
   cmd = "Neotree",
   keys = {
     {
-      "<leader>fE",
+      "<leader>fe",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
       end,
       desc = "[F]ile Tree [E]xplorer NeoTree (root)",
     },
     {
-      "<leader>fe",
+      "<leader>fE",
       function()
-        require("neo-tree.command").execute({ toggle = true, reveal = true })
+        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
       end,
       desc = "[F]ile Tree [E]xplorer NeoTree (cwd)",
     },
+    { "<leader>e", "<leader>fe", desc = "[F]ile Tree Root", remap = true },
+    { "<leader>E", "<leader>fE", desc = "[F]ile Tree Root", remap = true },
     {
       "<leader>fl",
       function()
@@ -55,11 +57,10 @@ return {
   opts = {
     sources = { "filesystem", "buffers", "git_status", "document_symbols" },
     open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
-    window = {
-      width = 50,
-      position = "current",
-    },
     default_component_configs = {
+      window = {
+        position = "right",
+      },
       icon = {
         folder_empty = "󰜌",
         folder_empty_open = "󰜌",

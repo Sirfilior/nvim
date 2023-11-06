@@ -20,34 +20,6 @@ return {
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       -- Diagnostic keymaps
-      {
-        "[d",
-        function()
-          vim.diagnostic.goto_prev()
-        end,
-        desc = "Go to previous diagnostic message",
-      },
-      {
-        "]d",
-        function()
-          vim.diagnostic.goto_next()
-        end,
-        desc = "Go to next diagnostic message",
-      },
-      {
-        "<leader>e",
-        function()
-          vim.diagnostic.open_float()
-        end,
-        desc = "Open floating diagnostic message",
-      },
-      {
-        "<leader>q",
-        function()
-          vim.diagnostic.setloclist()
-        end,
-        desc = "Open diagnostics list",
-      },
     },
     opts = {
       -- Add languages to be installed here that you want installed for treesitter

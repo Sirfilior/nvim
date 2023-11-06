@@ -31,6 +31,9 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
 vim.keymap.set("n", "[q", vim.cmd.cprevious, { silent = true })
 vim.keymap.set("n", "]q", vim.cmd.cnext, { silent = true })
 
+vim.keymap.set("n", "[d", vim.diagnostics.goto_prev, { desc = "Go to previous diagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostics.goto_next, { desc = "Go to next diagnostic message" })
+
 -- better indenting
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
