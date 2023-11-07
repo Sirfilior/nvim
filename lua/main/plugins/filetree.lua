@@ -150,6 +150,12 @@ return {
     vim.list_extend(opts.event_handlers, {
       { event = events.FILE_MOVED, handler = on_move },
       { event = events.FILE_RENAMED, handler = on_move },
+      {
+        event = events.FILE_OPENED,
+        handler = function(_)
+          require("neo-tree.command").execute({ action = "close" })
+        end,
+      },
     })
 
     require("neo-tree").setup(opts)
