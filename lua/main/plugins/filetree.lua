@@ -8,14 +8,14 @@ return {
     {
       "<leader>fe",
       function()
-        require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
+        require("neo-tree.command").execute({ toggle = true, dir = Util.root(), reveal = true })
       end,
       desc = "[F]ile Tree [E]xplorer NeoTree (root)",
     },
     {
       "<leader>fE",
       function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd(), reveal = true })
       end,
       desc = "[F]ile Tree [E]xplorer NeoTree (cwd)",
     },
@@ -59,7 +59,7 @@ return {
     open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
     default_component_configs = {
       window = {
-        position = "right",
+        position = "current",
       },
       icon = {
         folder_empty = "󰜌",
@@ -90,7 +90,7 @@ return {
         hide_dotfiles = false,
       },
       window = {
-        position = "right",
+        position = "current",
         mappings = {
           ["f"] = "noop",
           ["fs"] = "telescope_find",
