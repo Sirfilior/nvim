@@ -1,3 +1,4 @@
+local Util = require("util")
 return {
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -98,6 +99,13 @@ return {
         desc = "[S]earch [F]iles",
       },
       {
+        "<leader>sfr",
+        function()
+          require("telescope.builtin").find_files({ hidden = true, cwd = Util.root() })
+        end,
+        desc = "[S]earch [F]iles Root",
+      },
+      {
         "<leader>sh",
         function()
           require("telescope.builtin").help_tags()
@@ -131,6 +139,13 @@ return {
           require("telescope.builtin").live_grep({ additional_args = { "--no-ignore" } })
         end,
         desc = "[S]earch by [G]rep including [I]gnored",
+      },
+      {
+        "<leader>sgr",
+        function()
+          require("util.telescope").multi_rg({ cwd = Util.root({}) })
+        end,
+        desc = "[S]earch [G]rep Root",
       },
       {
         "<leader>sd",
