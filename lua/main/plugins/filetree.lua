@@ -24,7 +24,7 @@ return {
     {
       "<leader>fl",
       function()
-        require("neo-tree.command").execute({ toggle = true, position = "left", reveal = true })
+        require("neo-tree.command").execute({ toggle = true, position = "right", dir = Util.root() })
       end,
       desc = "[F]ile Tree [E]xplorer [L]eft NeoTree (cwd)",
     },
@@ -90,6 +90,7 @@ return {
         hide_dotfiles = false,
       },
       window = {
+        position = "right",
         mappings = {
           ["f"] = "noop",
           ["fs"] = "telescope_find",
