@@ -50,8 +50,8 @@ return {
     fmt(
       [[
   <f:translate
-    key="{()}"
-    extensionName="{()}"
+    key="()"
+    extensionName="()"
   />
   ]],
       { i(1), i(2) },
