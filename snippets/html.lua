@@ -45,4 +45,17 @@ return {
       { delimiters = "()" }
     )
   ),
+  s(
+    "ftr",
+    fmt(
+      [[
+  <f:translate
+    key="{()}"
+    extensionName="{()}"
+  />
+  ]],
+      { i(1), i(2) },
+      { delimiters = "()" }
+    )
+  ),
 }
