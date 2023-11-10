@@ -24,6 +24,7 @@ return {
         "query",
         "regex",
         "bash",
+        "fish",
         "json",
         "jsonc",
         "yaml",

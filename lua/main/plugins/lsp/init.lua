@@ -57,7 +57,16 @@ return {
         html = {},
         emmet_ls = {},
         cssls = {},
-        jsonls = {},
+        jsonls = {
+          settings = {
+            json = {
+              format = {
+                enable = true,
+              },
+              validate = true,
+            },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {

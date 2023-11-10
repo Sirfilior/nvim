@@ -74,6 +74,7 @@ return {
         formatters_by_ft = {
           lua = { "stylua" },
           sh = { "shfmt" },
+          fish = { "fish_indent" },
         },
         -- LazyVim will merge the options you set here with builtin formatters.
         -- You can also define any custom formatters here.

@@ -7,6 +7,7 @@ return {
       events = { "BufWritePost", "BufReadPost", "InsertLeave" },
       linters_by_ft = {
         scss = { "stylelint" },
+        fish = { "fish" },
       },
       -- LazyVim extension to easily override linter options
       -- or add custom linters.
