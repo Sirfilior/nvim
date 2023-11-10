@@ -138,18 +138,26 @@ function M.setup()
     M.format({ force = true })
   end, { desc = "Format selection or buffer" })
 
+  -- Vim format
+  vim.api.nvim_create_user_command("LazyFormatLsp", function()
+    vim.lsp.buf.format()
+  end, { desc = "Format with builtin only" })
+
   -- Format info
   vim.api.nvim_create_user_command("LazyFormatInfo", function()
     M.info()
   end, { desc = "Show info about the formatters for the current buffer" })
 
-
--- formatting
-vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-  M.format({ force = true })
-end, { desc = "Format" })
-vim.keymap.set("n", "<leader>uf", function() M.format.toggle() end, { desc = "Toggle auto format (global)" })
-vim.keymap.set("n", "<leader>uF", function() M.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
+  -- formatting
+  vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+    M.format({ force = true })
+  end, { desc = "Format" })
+  vim.keymap.set("n", "<leader>uf", function()
+    M.format.toggle()
+  end, { desc = "Toggle auto format (global)" })
+  vim.keymap.set("n", "<leader>uF", function()
+    M.format.toggle(true)
+  end, { desc = "Toggle auto format (buffer)" })
 end
 
 return M
