@@ -58,4 +58,5 @@ return {
       { delimiters = "()" }
     )
   ),
+  s("ftri", fmt("{f:translate(key: '[]', extensionName: '[]')}", { i(1), i(2) }, { delimiters = "[]" })),
 }
