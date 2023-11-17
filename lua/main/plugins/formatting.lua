@@ -80,6 +80,11 @@ return {
         -- You can also define any custom formatters here.
         ---@type table<string,table>
         formatters = {
+          dprint = {
+            condition = function(ctx)
+              return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
+            end,
+          },
           injected = { options = { ignore_errors = true } },
           -- # Example of using dprint only when a dprint.json file is present
           -- dprint = {
