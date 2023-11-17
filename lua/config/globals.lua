@@ -11,3 +11,11 @@ if pcall(require, "plenary") then
     return require(name)
   end
 end
+
+-- Add custom filetypes
+vim.filetype.add({
+  extension = {
+    typoscript = "typoscript",
+    tsconfig = "typoscript",
+  },
+})
