@@ -38,6 +38,7 @@ require("lazy").setup({
   { import = "main.plugins.lang.typescript" },
   { import = "main.plugins.lang.python" },
   { import = "main.plugins.lang.php" },
+  { import = "main.plugins.lang.vue" },
   -- { import = "main.plugins.lang.flutter" },
   { import = "main.plugins.lang.docker" },
   { import = "main.plugins.lang.clangd" },
@@ -51,4 +52,5 @@ require("lazy").setup({
 
   { import = "scrap.plugins.cellular" },
   { import = "scrap.plugins.typo3" },
+  { import = "scrap.plugins.bigfile" },
 }, {})

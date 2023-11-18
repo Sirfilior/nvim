@@ -239,19 +239,32 @@ return {
       require("substitute").setup({})
     end,
   },
-  -- TOO SLOW FOR NOW
-  -- {
-  --   -- Add indentation guides even on blank lines
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   main = "ibl",
-  --   -- Enable `lukas-reineke/indent-blankline.nvim`
-  --   -- See `:help indent_blankline.txt`
-  --   opts = {
-  --     indent = {
-  --       char = "┊",
-  --     },
-  --   },
-  -- },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {
+      indent = {
+        char = "│",
+        tab_char = "│",
+      },
+      exclude = {
+        filetypes = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+      },
+    },
+    main = "ibl",
+  },
 
   -- Automatically highlights other instances of the word under your cursor.
   -- This works with LSP, Treesitter, and regexp matching to find the other

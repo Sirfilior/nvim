@@ -33,6 +33,11 @@ vim.keymap.set("n", "<leader>fe", [[<cmd>call VSCodeNotify('workbench.files.acti
 vim.keymap.set("n", "<leader>ft", [[<cmd>call VSCodeNotify('terminal.focus')<cr>]])
 vim.keymap.set("n", "<leader>ca", [[<cmd>call VSCodeNotify('editor.action.quickFix')<cr>]])
 
+vim.keymap.set("n", "<leader>e", [[<cmd>call VSCodeNotify('workbench.view.explorer')<cr>]])
+vim.keymap.set("n", "<leader>ff", [[<cmd>call VSCodeNotify('workbench.action.quickOpen')<cr>]])
+vim.keymap.set("n", "<leader>fp", [[<cmd>call VSCodeNotify('workbench.action.openRecent')<cr>]])
+vim.keymap.set("n", "<leader>fn", [[<cmd>call VSCodeNotify('workbench.action.files.newUntitledFile')<cr>]])
+
 -- LSP Settings
 -- editor.action.goToReferences
 vim.keymap.set("n", "<leader>rn", [[<cmd>call VSCodeNotify('editor.action.goToReferences')<cr>]])
