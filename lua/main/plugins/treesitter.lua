@@ -52,9 +52,6 @@ return {
           node_decremental = "<M-space>",
         },
       },
-      context_commentstring = {
-        enable = true,
-      },
       textobjects = {
         move = {
           enable = true,
