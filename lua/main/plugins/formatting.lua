@@ -28,6 +28,12 @@ end
 
 return {
   {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      table.insert(opts.ensure_installed, "prettierd")
+    end,
+  },
+  {
     "stevearc/conform.nvim",
     dependencies = { "mason.nvim" },
     lazy = true,
@@ -75,28 +81,38 @@ return {
           lua = { "stylua" },
           sh = { "shfmt" },
           fish = { "fish_indent" },
+          ["javascript"] = { { "biome", "prettierd", "prettier" } },
+          ["javascriptreact"] = { { "biome", "prettierd", "prettier" } },
+          ["typescript"] = { { "biome", "prettierd", "prettier" } },
+          ["typescriptreact"] = { { "biome", "prettierd", "prettier" } },
+          ["vue"] = { { "biome", "prettierd", "prettier" } },
+          ["css"] = { { "biome", "prettierd", "prettier" } },
+          ["scss"] = { { "biome", "prettierd", "prettier" } },
+          ["less"] = { { "biome", "prettierd", "prettier" } },
+          ["html"] = { { "biome", "prettierd", "prettier" } },
+          ["json"] = { { "biome", "prettierd", "prettier" } },
+          ["jsonc"] = { { "biome", "prettierd", "prettier" } },
+          ["yaml"] = { { "biome", "prettierd", "prettier" } },
+          ["markdown"] = { { "biome", "prettierd", "prettier" } },
+          ["markdown.mdx"] = { { "biome", "prettierd", "prettier" } },
+          ["graphql"] = { { "biome", "prettierd", "prettier" } },
+          ["handlebars"] = { { "biome", "prettierd", "prettier" } },
         },
         -- LazyVim will merge the options you set here with builtin formatters.
         -- You can also define any custom formatters here.
         ---@type table<string,table>
         formatters = {
+          biome = {
+            condition = function(ctx)
+              return vim.fs.find({ "biome.json" }, { path = ctx.filename, upward = true })[1]
+            end,
+          },
           dprint = {
             condition = function(ctx)
               return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
             end,
           },
           injected = { options = { ignore_errors = true } },
-          -- # Example of using dprint only when a dprint.json file is present
-          -- dprint = {
-          --   condition = function(ctx)
-          --     return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
-          --   end,
-          -- },
-          --
-          -- # Example of using shfmt with extra args
-          -- shfmt = {
-          --   extra_args = { "-i", "2", "-ci" },
-          -- },
         },
       }
       return opts
