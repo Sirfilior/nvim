@@ -107,12 +107,12 @@ return {
       {
         "<leader>sf",
         function()
-          require("telescope.builtin").find_files({ hidden = true })
+          require("telescope.builtin").find_files()
         end,
         desc = "[S]earch [F]iles",
       },
       {
-        "<leader>sfr",
+        "<leader>sF",
         function()
           require("telescope.builtin").find_files({ hidden = true, cwd = Util.root() })
         end,
