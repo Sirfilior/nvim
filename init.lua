@@ -42,6 +42,7 @@ require("lazy").setup({
 
   { import = "extra.plugins.vscode" },
   { import = "extra.plugins.eslint" },
+  { import = "extra.plugins.prettier" },
   -- { import = "extra.plugins.stylelint" },
 
   { import = "scrap.plugins.cellular" },
