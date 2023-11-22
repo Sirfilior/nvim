@@ -153,10 +153,10 @@ function M.setup()
     M.format({ force = true })
   end, { desc = "Format" })
   vim.keymap.set("n", "<leader>uf", function()
-    M.format.toggle()
+    M.toggle()
   end, { desc = "Toggle auto format (global)" })
   vim.keymap.set("n", "<leader>uF", function()
-    M.format.toggle(true)
+    M.toggle(true)
   end, { desc = "Toggle auto format (buffer)" })
 end
 
