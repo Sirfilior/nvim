@@ -41,4 +41,19 @@ return {
       end
     end,
   },
+  {
+    "nvim-neotest/neotest",
+    optional = true,
+    dependencies = {
+      "marilari88/neotest-vitest",
+    },
+    opts = {
+      adapters = {
+        ["neotest-vitest"] = {
+          -- Here we can set options for neotest-go, e.g.
+          -- args = { "-tags=integration" }
+        },
+      },
+    },
+  },
 }
