@@ -98,9 +98,10 @@ vim.filetype.add({
   },
 })
 
-if vim.fn.has("nvim-0.9.0") == 1 then
-  vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
-end
+-- TODO: UPDATE ONCE FIXED
+-- if vim.fn.has("nvim-0.9.0") == 1 then
+--   vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
+-- end
 
 if vim.fn.has("nvim-0.10") == 1 then
   vim.opt.smoothscroll = true
@@ -108,3 +109,5 @@ end
 --
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+-- will be romoved
+vim.g.skip_ts_context_commentstring_module = true
