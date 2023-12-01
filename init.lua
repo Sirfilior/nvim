@@ -32,6 +32,7 @@ require("lazy").setup({
   { import = "main.plugins.lang.rust" },
   { import = "main.plugins.lang.typescript" },
   { import = "main.plugins.lang.python" },
+  { import = "main.plugins.lang.ocaml" },
   { import = "main.plugins.lang.php" },
   { import = "main.plugins.lang.vue" },
   -- { import = "main.plugins.lang.flutter" },
