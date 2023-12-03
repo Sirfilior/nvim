@@ -23,7 +23,6 @@ return {
       --   },
       -- },
       status = { virtual_text = true },
-      output = { open_on_run = true },
       quickfix = {
         open = function()
           if require("util").has("trouble.nvim") then

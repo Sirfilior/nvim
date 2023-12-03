@@ -76,3 +76,17 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- windows and splits
+vim.keymap.set("n", "<C-J>", "<C-W><C-J>", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-K>", "<C-W><C-K>", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-L>", "<C-W><C-L>", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-H>", "<C-W><C-H>", { noremap = true, desc = "Easier Moving between splits" })
+
+vim.keymap.set("n", "<c-,>", "<C-W><", { noremap = true, desc = "Sizing window horizontally" })
+vim.keymap.set("n", "<c-.>", "<C-W>>", { noremap = true, desc = "Sizing window horizontally" })
+vim.keymap.set("n", "<A-,>", "<C-W>5<", { noremap = true, desc = "Sizing window horizontally" })
+vim.keymap.set("n", "<A-.>", "<C-W>5>", { noremap = true, desc = "Sizing window horizontally" })
+
+vim.keymap.set("n", "<A-t>", "<C-W>+", { noremap = true, desc = "Sizing window vertically - taller" })
+vim.keymap.set("n", "<A-s>", "<C-W>-", { noremap = true, desc = "Sizing window vertically - shorter" })
