@@ -98,10 +98,7 @@ vim.filetype.add({
   },
 })
 
--- TODO: UPDATE ONCE FIXED
--- if vim.fn.has("nvim-0.9.0") == 1 then
---   vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
--- end
+vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
 
 if vim.fn.has("nvim-0.10") == 1 then
   vim.opt.smoothscroll = true

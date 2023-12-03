@@ -147,17 +147,6 @@ function M.setup()
   vim.api.nvim_create_user_command("LazyFormatInfo", function()
     M.info()
   end, { desc = "Show info about the formatters for the current buffer" })
-
-  -- formatting
-  vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-    M.format({ force = true })
-  end, { desc = "Format" })
-  vim.keymap.set("n", "<leader>uf", function()
-    M.toggle()
-  end, { desc = "Toggle auto format (global)" })
-  vim.keymap.set("n", "<leader>uF", function()
-    M.toggle(true)
-  end, { desc = "Toggle auto format (buffer)" })
 end
 
 return M

@@ -1,3 +1,5 @@
+local Util = require("util")
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "J", "mzJ`z")
@@ -30,6 +32,35 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
 
 vim.keymap.set("n", "[q", vim.cmd.cprevious, { silent = true })
 vim.keymap.set("n", "]q", vim.cmd.cnext, { silent = true })
+
+local diagnostics_goto = function(next, severity)
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go({ severity = severity })
+  end
+end
+
+vim.keymap.set("n", "]d", diagnostics_goto(true), { desc = "Next Diagnostic" })
+vim.keymap.set("n", "[d", diagnostics_goto(false), { desc = "Prev Diagnostic" })
+vim.keymap.set("n", "]e", diagnostics_goto(true, "ERROR"), { desc = "Next Error" })
+vim.keymap.set("n", "[e", diagnostics_goto(false, "ERROR"), { desc = "Prev Error" })
+vim.keymap.set("n", "]w", diagnostics_goto(true, "WARN"), { desc = "Next Warning" })
+vim.keymap.set("n", "[w", diagnostics_goto(false, "WARN"), { desc = "Prev Warning" })
+
+-- Toggle
+vim.keymap.set("n", "<leader>ud", function()
+  Util.toggle.diagnostic()
+end, { desc = "Toggle Diagnostics" })
+vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+  Util.format({ force = true })
+end, { desc = "Format" })
+vim.keymap.set("n", "<leader>uf", function()
+  Util.format.toggle()
+end, { desc = "Toggle auto format (global)" })
+vim.keymap.set("n", "<leader>uF", function()
+  Util.format.toggle(true)
+end, { desc = "Toggle auto format (buffer)" })
 
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })

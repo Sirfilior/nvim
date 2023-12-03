@@ -51,3 +51,6 @@ require("lazy").setup({
   { import = "scrap.plugins.typo3" },
   { import = "scrap.plugins.bigfile" },
 }, {})
+
+-- Setup after lazy, to get lazy utils
+require("config.remap")
