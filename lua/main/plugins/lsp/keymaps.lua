@@ -19,7 +19,6 @@ function M.get()
       { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
       { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
 
-      { "<leader>D", vim.lsp.buf.type_definition, desc = "Type [D]efinition" },
       { "<leader>cs", function() require("telescope.builtin").lsp_document_symbols({ reuse_win = true }) end, desc = "[D]ocument [S]ymbols" },
       { "<leader>ws", function() require("telescope.builtin").lsp_dynamic_workspace_symbols({ reuse_win = true }) end, desc = "[W]orkspace [S]ymbols" },
 
