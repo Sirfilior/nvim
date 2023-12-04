@@ -62,6 +62,10 @@ vim.keymap.set("n", "<leader>uF", function()
   Util.format.toggle(true)
 end, { desc = "Toggle auto format (buffer)" })
 
+vim.keymap.set("n", "<leader>us", function()
+  Util.toggle("spell")
+end, { desc = "Toggle spelling" })
+
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 

@@ -79,7 +79,9 @@ return {
           },
         },
         typst_lsp = {
-          exportPdf = "never",
+          setings = {
+            exportPdf = "never",
+          },
         },
       },
       -- you can do any additional lsp server setup here

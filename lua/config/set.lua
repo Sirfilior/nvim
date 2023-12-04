@@ -20,6 +20,7 @@ vim.opt.formatoptions = vim.opt.formatoptions
 
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.grepprg = "rg --vimgrep"
+vim.opt.spelllang = { "en" }
 
 -- Make line numbers default
 vim.wo.number = true
@@ -78,6 +79,7 @@ vim.opt.undofile = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
+vim.opt.splitbelow = true -- Horizontal splits will automatically be below
 vim.opt.winminwidth = 5 -- Minimum window width
 vim.opt.wrap = false -- Disable line wrap
 vim.opt.fillchars = {
