@@ -66,6 +66,10 @@ vim.keymap.set("n", "<leader>us", function()
   Util.toggle("spell")
 end, { desc = "Toggle spelling" })
 
+vim.keymap.set("n", "<leader>uw", function()
+  Util.toggle("wrap")
+end, { desc = "Toggle wrap" })
+
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 
