@@ -79,7 +79,6 @@ vim.opt.undofile = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
-vim.opt.splitbelow = true -- Horizontal splits will automatically be below
 vim.opt.winminwidth = 5 -- Minimum window width
 vim.opt.wrap = false -- Disable line wrap
 vim.opt.fillchars = {
