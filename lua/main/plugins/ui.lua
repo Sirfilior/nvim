@@ -33,6 +33,10 @@ return {
   {
     "3rd/image.nvim",
     event = "VeryLazy",
+    cond = function()
+      local ok = pcall(require, "magick")
+      return ok
+    end,
     init = function()
       package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
       package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"

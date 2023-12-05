@@ -50,7 +50,7 @@ vim.keymap.set("n", "[w", diagnostics_goto(false, "WARN"), { desc = "Prev Warnin
 
 -- Toggle
 vim.keymap.set("n", "<leader>ud", function()
-  Util.toggle.diagnostic()
+  Util.toggle.diagnostics()
 end, { desc = "Toggle Diagnostics" })
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
   Util.format({ force = true })
@@ -61,6 +61,16 @@ end, { desc = "Toggle auto format (global)" })
 vim.keymap.set("n", "<leader>uF", function()
   Util.format.toggle(true)
 end, { desc = "Toggle auto format (buffer)" })
+
+local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+vim.keymap.set("n", "<leader>uc", function()
+  Util.toggle("conceallevel", false, { 0, conceallevel })
+end, { desc = "Toggle Conceal" })
+if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
+  vim.keymap.set("n", "<leader>uh", function()
+    Util.format.inlay_hint()
+  end, { desc = "Toggle Inlay Hints" })
+end
 
 vim.keymap.set("n", "<leader>us", function()
   Util.toggle("spell")
