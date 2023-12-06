@@ -93,12 +93,6 @@ vim.opt.fillchars = {
 
 vim.opt.modelines = 1
 
-vim.filetype.add({
-  extension = {
-    mjml = "html",
-  },
-})
-
 vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
 
 if vim.fn.has("nvim-0.10") == 1 then

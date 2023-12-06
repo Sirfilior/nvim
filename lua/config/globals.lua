@@ -19,3 +19,15 @@ vim.filetype.add({
     tsconfig = "typoscript",
   },
 })
+vim.filetype.add({
+  extension = {
+    mjml = "html",
+  },
+})
+vim.filetype.add({
+  extension = {
+    mdx = "markdown.mdx",
+  },
+  filename = {},
+  pattern = {},
+})
