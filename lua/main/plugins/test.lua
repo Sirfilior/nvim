@@ -24,7 +24,9 @@ return {
       -- },
       status = { virtual_text = true },
       output = { open_on_run = true },
+      -- TODO: NOT WORKING
       quickfix = {
+        enabled = true,
         open = function()
           if require("util").has("trouble.nvim") then
             require("trouble").open({ mode = "quickfix", focus = false })
