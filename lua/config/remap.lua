@@ -22,6 +22,9 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "Q", "<nop>")
 
+vim.keymap.set("n", "Q", "@qj")
+vim.keymap.set("x", "Q", ":norm @q<CR>")
+
 -- visual mode "fix"
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
