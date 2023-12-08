@@ -8,6 +8,8 @@ return {
     end,
   },
 
+  { "jesseleite/nvim-macroni", cmd = { "YankMacro" } },
+
   -- library used by other plugins
   { "nvim-lua/plenary.nvim", lazy = true },
 }
