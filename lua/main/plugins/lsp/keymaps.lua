@@ -30,7 +30,7 @@ function M.get()
 
       { "K", vim.lsp.buf.hover, desc = "Hover" },
 
-      { "<c-d>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
+      { "<c-d>", vim.lsp.buf.signature_help, mode = {"i", "s" }, desc = "Signature Help", has = "signatureHelp" },
       { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
 
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },

@@ -71,7 +71,7 @@ vim.keymap.set("n", "<leader>uc", function()
 end, { desc = "Toggle Conceal" })
 if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
   vim.keymap.set("n", "<leader>uh", function()
-    Util.format.inlay_hint()
+    Util.format.inlay_hints()
   end, { desc = "Toggle Inlay Hints" })
 end
 
