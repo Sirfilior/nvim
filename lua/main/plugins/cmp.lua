@@ -94,6 +94,7 @@ return {
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end
+            item.menu = nil
             return item
           end,
         },
