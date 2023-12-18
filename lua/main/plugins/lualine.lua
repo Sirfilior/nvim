@@ -54,7 +54,8 @@ return {
                 hint = icons.diagnostics.Hint,
               },
             },
-            { Util.lualine.harpoon_component },
+            -- TODO: FIX ONCE HARPOON IS READY
+            -- { Util.lualine.harpoon_component },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { Util.lualine.pretty_path() },
             {
