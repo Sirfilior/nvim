@@ -94,10 +94,7 @@ vim.opt.fillchars = {
 vim.opt.modelines = 1
 
 vim.opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
-
-if vim.fn.has("nvim-0.10") == 1 then
-  vim.opt.smoothscroll = true
-end
+vim.opt.smoothscroll = true
 --
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
