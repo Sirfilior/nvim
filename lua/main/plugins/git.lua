@@ -69,8 +69,8 @@ return {
         vim.keymap.set(
           "n",
           "<leader>ph",
-          require("gitsigns").preview_hunk,
-          { buffer = bufnr, desc = "[P]review [H]unk" }
+          require("gitsigns").preview_hunk_inline,
+          { buffer = bufnr, desc = "[P]review [H]unk Inline" }
         )
       end,
     },
