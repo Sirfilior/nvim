@@ -1,54 +1,34 @@
 return {
   {
     "theprimeagen/harpoon",
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 20,
-      },
-    },
-    keys = {
-      {
-        "<leader>a",
-        function()
-          require("harpoon.mark").add_file()
-        end,
-        desc = "Add to marks",
-      },
-      {
-        "<C-e>",
-        function()
-          require("harpoon.ui").toggle_quick_menu()
-        end,
-        desc = "Harpoon quick menu",
-      },
-      {
-        "<leader>1",
-        function()
-          require("harpoon.ui").nav_file(1)
-        end,
-        desc = "Harpoon quick menu",
-      },
-      {
-        "<leader>2",
-        function()
-          require("harpoon.ui").nav_file(2)
-        end,
-        desc = "Harpoon quick menu",
-      },
-      {
-        "<leader>3",
-        function()
-          require("harpoon.ui").nav_file(3)
-        end,
-        desc = "Harpoon quick menu",
-      },
-      {
-        "<leader>4",
-        function()
-          require("harpoon.ui").nav_file(4)
-        end,
-        desc = "Harpoon quick menu",
-      },
-    },
+    branch = "harpoon2",
+    opts = {},
+    config = function(_, opts)
+      local harpoon = require("harpoon")
+
+      harpoon:setup(opts)
+
+      vim.keymap.set("n", "<leader>a", function()
+        harpoon:list():append()
+      end)
+      vim.keymap.set("n", "<C-e>", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
+      vim.keymap.set("n", "<leader>1", function()
+        harpoon:list():select(1)
+      end)
+      vim.keymap.set("n", "<leader>2", function()
+        harpoon:list():select(2)
+      end)
+      vim.keymap.set("n", "<leader>3", function()
+        harpoon:list():select(3)
+      end)
+      vim.keymap.set("n", "<leader>4", function()
+        harpoon:list():select(4)
+      end)
+      vim.keymap.set("n", "<leader>5", function()
+        harpoon:list():select(5)
+      end)
+    end,
   },
 }

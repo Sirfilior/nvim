@@ -10,7 +10,7 @@ local harpoonAction = function(_)
 
   if entry.filename then
     print("Harpoon: adding " .. entry.filename)
-    require("harpoon.mark").add_file(entry.filename)
+    require("harpoon"):list():append(entry.filename)
   else
     print("No file associated with this entry")
   end
