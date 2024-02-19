@@ -2,7 +2,11 @@ return {
   {
     "theprimeagen/harpoon",
     branch = "harpoon2",
-    opts = {},
+    opts = {
+      settings = {
+        save_on_toggle = true,
+      },
+    },
     config = function(_, opts)
       local harpoon = require("harpoon")
 

@@ -9,8 +9,15 @@ local harpoonAction = function(_)
   end
 
   if entry.filename then
+    local item = {
+      value = entry.filename,
+      context = {
+        row = 1,
+        col = 0,
+      },
+    }
     print("Harpoon: adding " .. entry.filename)
-    require("harpoon"):list():append(entry.filename)
+    require("harpoon"):list():append(item)
   else
     print("No file associated with this entry")
   end
