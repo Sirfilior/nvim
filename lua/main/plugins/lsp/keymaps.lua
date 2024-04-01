@@ -34,6 +34,8 @@ function M.get()
       { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
 
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
+      { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "codeLens" },
+      { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "codeLens" },
       { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
       {
         "<leader>cA",
