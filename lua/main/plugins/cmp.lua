@@ -1,49 +1,9 @@
 return {
   {
-    -- Snippet Engine
-    "L3MON4D3/LuaSnip",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-        require("luasnip.loaders.from_lua").lazy_load({ paths = "./snippets" })
-
-        local ls = require("luasnip")
-
-        -- <c-k> is my expansion key
-        -- this will expand the current item or jump to the next item within the snippet.
-        vim.keymap.set({ "i", "s" }, "<c-k>", function()
-          if ls.expand_or_jumpable() then
-            ls.expand_or_jump()
-          end
-        end, { silent = true })
-
-        -- <c-j> is my jump backwards key.
-        -- this always moves to the previous item within the snippet
-        vim.keymap.set({ "i", "s" }, "<c-j>", function()
-          if ls.jumpable(-1) then
-            ls.jump(-1)
-          end
-        end, { silent = true })
-
-        -- <c-l> is selecting within a list of options.
-        -- This is useful for choice nodes (introduced in the forthcoming episode 2)
-        vim.keymap.set("i", "<c-l>", function()
-          if ls.choice_active() then
-            ls.change_choice(1)
-          end
-        end)
-      end,
-    },
-  },
-  {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
-      -- & its associated nvim-cmp source
-      "saadparwaiz1/cmp_luasnip",
-
       -- Adds LSP completion capabilities
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp",
@@ -56,6 +16,7 @@ return {
       local defaults = require("cmp.config.default")()
 
       return {
+        auto_brackets = {},
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
@@ -133,12 +94,25 @@ return {
         -- },
       }
     end,
+    ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
     config = function(_, opts)
-      local cmp = require("cmp")
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
       end
+      local cmp = require("cmp")
+      local Kind = cmp.lsp.CompletionItemKind
       cmp.setup(opts)
+      cmp.event:on("confirm_done", function(event)
+        if not vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
+          return
+        end
+        local entry = event.entry
+        local item = entry:get_completion_item()
+        if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
+          local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
+          vim.api.nvim_feedkeys(keys, "i", true)
+        end
+      end)
       --
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ "/", "?" }, {
@@ -157,6 +131,64 @@ return {
           { name = "cmdline" },
         }),
       })
+    end,
+  },
+  {
+    -- Snippet Engine
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      {
+        "rafamadriz/friendly-snippets",
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+          require("luasnip.loaders.from_lua").lazy_load({ paths = "./snippets" })
+        end,
+      },
+      {
+        "nvim-cmp",
+        dependencies = {
+          "saadparwaiz1/cmp_luasnip",
+        },
+        opts = function(_, opts)
+          opts.snippet = {
+            expand = function(args)
+              require("luasnip").lsp_expand(args.body)
+            end,
+          }
+          table.insert(opts.sources, { name = "luasnip" })
+        end,
+      },
+    },
+    opts = {
+      history = true,
+      delete_check_events = "TextChanged",
+    },
+    config = function()
+      local ls = require("luasnip")
+
+      -- <c-k> is my expansion key
+      -- this will expand the current item or jump to the next item within the snippet.
+      vim.keymap.set({ "i", "s" }, "<c-k>", function()
+        if ls.expand_or_jumpable() then
+          ls.expand_or_jump()
+        end
+      end, { silent = true })
+
+      -- <c-j> is my jump backwards key.
+      -- this always moves to the previous item within the snippet
+      vim.keymap.set({ "i", "s" }, "<c-j>", function()
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        end
+      end, { silent = true })
+
+      -- <c-l> is selecting within a list of options.
+      -- This is useful for choice nodes (introduced in the forthcoming episode 2)
+      vim.keymap.set("i", "<c-l>", function()
+        if ls.choice_active() then
+          ls.change_choice(1)
+        end
+      end)
     end,
   },
 }

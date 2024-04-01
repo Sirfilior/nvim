@@ -214,10 +214,15 @@ return {
           a = "Argument",
           b = "Balanced ), ], }",
           c = "Class",
+          d = "Digit(s)",
+          e = "Word in CamelCase & snake_case",
           f = "Function",
+          g = "Entire file",
           o = "Block, conditional, loop",
           q = "Quote `, \", '",
           t = "Tag",
+          u = "Use/call function & method",
+          U = "Use/call without dot in name",
         }
         local a = vim.deepcopy(i)
         for k, v in pairs(a) do

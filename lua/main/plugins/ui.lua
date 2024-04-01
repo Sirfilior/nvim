@@ -66,22 +66,6 @@ return {
   -- ui components
   { "MunifTanjim/nui.nvim", lazy = true },
   {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
-  },
-  {
-    "ziontee113/color-picker.nvim",
-    lazy = true,
-    keys = {
-      { "<leader>cp", "<cmd>PickColor<cr>", desc = "Color Picker" },
-    },
-    config = function()
-      require("color-picker").setup()
-    end,
-  },
-  {
     "folke/tokyonight.nvim",
     priority = 1000,
     opts = {
