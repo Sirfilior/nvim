@@ -165,12 +165,15 @@ return {
     },
     config = function()
       local ls = require("luasnip")
-
       -- <c-k> is my expansion key
       -- this will expand the current item or jump to the next item within the snippet.
+      -- if ls.expand_or_jumpable() then
+      --   ls.expand_or_jump()
+      -- end
+      -- at the moment we only jump
       vim.keymap.set({ "i", "s" }, "<c-k>", function()
-        if ls.expand_or_jumpable() then
-          ls.expand_or_jump()
+        if ls.jumpable(1) then
+          ls.jump(1)
         end
       end, { silent = true })
 
