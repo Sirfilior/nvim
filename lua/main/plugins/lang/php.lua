@@ -18,6 +18,7 @@ return {
       -- make sure mason installs the server
       servers = {
         phpactor = {},
+        twiggy_language_server = {},
       },
       setup = {
         phpactor = function(_, opts)

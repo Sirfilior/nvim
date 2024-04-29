@@ -20,6 +20,10 @@ return {
             "typescriptreact",
             "json",
           },
+          codeLens = {
+            references = true,
+            scriptSetupTools = true,
+          },
         }
         opts.servers.tsserver = {
           autostart = false,
