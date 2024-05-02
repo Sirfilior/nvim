@@ -9,7 +9,16 @@ return {
       end
     end,
   },
-
+  -- Ensure PHP tools are installed
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        twig = { "twig-cs-fixer" },
+      },
+    },
+  },
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
