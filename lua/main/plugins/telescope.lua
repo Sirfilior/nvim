@@ -22,7 +22,7 @@ return {
       },
     },
     opts = function()
-      local trouble = require("trouble.providers.telescope")
+      local open_with_trouble = require("trouble.sources.telescope").open
       local harpoonAction = require("util.telescope.harpoonAction")
       local flashAction = require("util.telescope.flashAction")
       return {
@@ -49,12 +49,12 @@ return {
               ["<C-d>"] = false,
               ["<C-a>"] = harpoonAction,
               ["<C-f>"] = flashAction,
-              ["<c-t>"] = trouble.open_with_trouble,
+              ["<c-t>"] = open_with_trouble,
             },
             n = {
               ["a"] = harpoonAction,
               ["f"] = flashAction,
-              ["<c-t>"] = trouble.open_with_trouble,
+              ["<c-t>"] = open_with_trouble,
             },
           },
         },
