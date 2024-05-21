@@ -97,9 +97,9 @@ function M.expand(snippet)
 
     Util[ok and "warn" or "error"](
       ([[%s
-```%s
-%s
-```]]):format(msg, vim.bo.filetype, snippet),
+  ```%s
+  %s
+  ```]]):format(msg, vim.bo.filetype, snippet),
       { title = "vim.snippet" }
     )
   end
