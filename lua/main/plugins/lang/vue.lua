@@ -1,43 +1,5 @@
 return {
   {
-    "nvim-lspconfig",
-    opts = function(_, opts)
-      local cwd = vim.fn.getcwd()
-      local util = require("lspconfig.util")
-      local project_root = util.find_node_modules_ancestor(cwd)
-
-      local vue_path = util.path.join(project_root, "node_modules", "vue")
-      local is_vue = vim.fn.isdirectory(vue_path) == 1
-      if is_vue then
-        opts.servers.volar = {
-          filetypes = {
-            "vue",
-            "javascript",
-            "javascript.jsx",
-            "typescript",
-            "typescript.tsx",
-            "javascriptreact",
-            "typescriptreact",
-            "json",
-          },
-          codeLens = {
-            references = true,
-            scriptSetupTools = true,
-          },
-        }
-        opts.servers.tsserver = {
-          autostart = false,
-          root_dir = function()
-            return false
-          end,
-          single_file_support = false,
-        }
-      end
-
-      return opts
-    end,
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
@@ -45,19 +7,40 @@ return {
       end
     end,
   },
+
   {
-    "nvim-neotest/neotest",
-    optional = true,
-    dependencies = {
-      "marilari88/neotest-vitest",
-    },
-    opts = {
-      adapters = {
-        ["neotest-vitest"] = {
-          -- Here we can set options for neotest-go, e.g.
-          -- args = { "-tags=integration" }
+    "neovim/nvim-lspconfig",
+    opts = function(_, opts)
+      local vue_typescript_plugin = require("mason-registry").get_package("vue-language-server"):get_install_path()
+        .. "/node_modules/@vue/language-server"
+        .. "/node_modules/@vue/typescript-plugin"
+
+      opts.servers = vim.tbl_deep_extend("force", opts.servers, {
+        volar = {},
+        -- Volar 2.0 has discontinued their "take over mode" which in previous version provided support for typescript in vue files.
+        -- The new approach to get typescript support involves using the typescript language server along side volar.
+        tsserver = {
+          init_options = {
+            plugins = {
+              -- Use typescript language server along with vue typescript plugin
+              {
+                name = "@vue/typescript-plugin",
+                location = vue_typescript_plugin,
+                languages = { "javascript", "typescript", "vue" },
+              },
+            },
+          },
+          filetypes = {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+            "vue",
+          },
         },
-      },
-    },
+      })
+    end,
   },
 }
