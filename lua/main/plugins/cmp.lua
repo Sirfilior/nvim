@@ -1,4 +1,3 @@
-local Util = require("util")
 return {
   {
     -- Autocompletion
@@ -7,8 +6,8 @@ return {
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       -- Adds LSP completion capabilities
-      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       { "rafamadriz/friendly-snippets" },
@@ -17,6 +16,7 @@ return {
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
+      local Util = require("util")
       local defaults = require("cmp.config.default")()
 
       return {
@@ -50,12 +50,12 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-e>"] = cmp.abort(),
-          ["<C-Space>"] = cmp.mapping.complete({}),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = Util.cmp.confirm(),
           ["<S-CR>"] = Util.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
           ["<C-CR>"] = function(fallback)
@@ -89,6 +89,7 @@ return {
     end,
     ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
     config = function(_, opts)
+      local Util = require("util")
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
       end
