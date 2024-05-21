@@ -1,3 +1,4 @@
+local Util = require("util")
 return {
   {
     -- Autocompletion
@@ -10,6 +11,8 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      { "rafamadriz/friendly-snippets" },
+      { "garymjr/nvim-snippets", opts = { friendly_snippets = true } },
     },
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -21,9 +24,29 @@ return {
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
+        keys = {
+          {
+            "<c-k>",
+            function()
+              return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = { "i", "s" },
+          },
+          {
+            "<c-j>",
+            function()
+              return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<Tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = { "i", "s" },
+          },
+        },
         snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+          expand = function(item)
+            return Util.cmp.expand(item.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
@@ -31,22 +54,18 @@ return {
           ["<C-p>"] = cmp.mapping.select_prev_item(),
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-e>"] = cmp.abort(),
           ["<C-Space>"] = cmp.mapping.complete({}),
-          ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<S-CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<CR>"] = Util.cmp.confirm(),
+          ["<S-CR>"] = Util.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
           ["<C-CR>"] = function(fallback)
             cmp.abort()
             fallback()
           end,
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lua" },
           { name = "nvim_lsp" },
-          { name = "luasnip" }, -- For luasnip users.
-          { name = "copilot", group_index = 1, priority = 100 },
+          { name = "path" },
         }, {
           { name = "buffer" },
         }),
@@ -70,7 +89,6 @@ return {
     end,
     ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
     config = function(_, opts)
-      local Util = require("util")
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
       end
@@ -105,67 +123,6 @@ return {
           { name = "cmdline" },
         }),
       })
-    end,
-  },
-  {
-    -- Snippet Engine
-    "L3MON4D3/LuaSnip",
-    dependencies = {
-      {
-        "rafamadriz/friendly-snippets",
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-          require("luasnip.loaders.from_lua").lazy_load({ paths = "./snippets" })
-        end,
-      },
-      {
-        "nvim-cmp",
-        dependencies = {
-          "saadparwaiz1/cmp_luasnip",
-        },
-        opts = function(_, opts)
-          opts.snippet = {
-            expand = function(args)
-              require("luasnip").lsp_expand(args.body)
-            end,
-          }
-          table.insert(opts.sources, { name = "luasnip" })
-        end,
-      },
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-    config = function()
-      local ls = require("luasnip")
-      -- <c-k> is my expansion key
-      -- this will expand the current item or jump to the next item within the snippet.
-      -- if ls.expand_or_jumpable() then
-      --   ls.expand_or_jump()
-      -- end
-      -- at the moment we only jump
-      vim.keymap.set({ "i", "s" }, "<c-k>", function()
-        if ls.jumpable(1) then
-          ls.jump(1)
-        end
-      end, { silent = true })
-
-      -- <c-j> is my jump backwards key.
-      -- this always moves to the previous item within the snippet
-      vim.keymap.set({ "i", "s" }, "<c-j>", function()
-        if ls.jumpable(-1) then
-          ls.jump(-1)
-        end
-      end, { silent = true })
-
-      -- <c-l> is selecting within a list of options.
-      -- This is useful for choice nodes (introduced in the forthcoming episode 2)
-      vim.keymap.set("i", "<c-l>", function()
-        if ls.choice_active() then
-          ls.change_choice(1)
-        end
-      end)
     end,
   },
 }
