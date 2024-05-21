@@ -61,7 +61,9 @@ return {
             cargo = {
               allFeatures = true,
               loadOutDirsFromCheck = true,
-              runBuildScripts = true,
+              buildScripts = {
+                enable = true,
+              },
             },
             -- Add clippy lints for Rust.
             checkOnSave = {
