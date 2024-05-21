@@ -2,6 +2,7 @@ return {
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
+    version = false,
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       -- Adds LSP completion capabilities
@@ -65,53 +66,26 @@ return {
           },
         },
         sorting = defaults.sorting,
-        -- sorting = {
-        --   -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
-        --   comparators = {
-        --     cmp.config.compare.offset,
-        --     cmp.config.compare.exact,
-        --     cmp.config.compare.score,
-        --
-        --     -- copied from cmp-under, but I don't think I need the plugin for this.
-        --     -- I might add some more of my own.
-        --     function(entry1, entry2)
-        --       local _, entry1_under = entry1.completion_item.label:find("^_+")
-        --       local _, entry2_under = entry2.completion_item.label:find("^_+")
-        --       entry1_under = entry1_under or 0
-        --       entry2_under = entry2_under or 0
-        --       if entry1_under > entry2_under then
-        --         return false
-        --       elseif entry1_under < entry2_under then
-        --         return true
-        --       end
-        --     end,
-        --
-        --     cmp.config.compare.kind,
-        --     cmp.config.compare.sort_text,
-        --     cmp.config.compare.length,
-        --     cmp.config.compare.order,
-        --   },
-        -- },
       }
     end,
     ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
     config = function(_, opts)
+      local Util = require("util")
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
       end
+
       local cmp = require("cmp")
-      local Kind = cmp.lsp.CompletionItemKind
       cmp.setup(opts)
+
       cmp.event:on("confirm_done", function(event)
-        if not vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
-          return
+        if vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
+          Util.cmp.auto_brackets(event.entry)
         end
-        local entry = event.entry
-        local item = entry:get_completion_item()
-        if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
-          local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
-          vim.api.nvim_feedkeys(keys, "i", true)
-        end
+      end)
+
+      cmp.event:on("menu_opened", function(event)
+        Util.cmp.add_missing_snippet_docs(event.window)
       end)
       --
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).

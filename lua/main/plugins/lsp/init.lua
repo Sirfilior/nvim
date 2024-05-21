@@ -8,7 +8,6 @@ return {
       { "folke/neodev.nvim", opts = {} },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
@@ -16,6 +15,7 @@ return {
         end,
       },
     },
+    ---@class PluginLspOpts
     opts = {
       -- options for vim.diagnostic.config()
       diagnostics = {
@@ -50,6 +50,10 @@ return {
       -- provide the code lenses.
       codelens = {
         enabled = false,
+      },
+      -- Enable lsp cursor word highlighting
+      document_highlight = {
+        enabled = true,
       },
       -- add any global capabilities here
       capabilities = {},
@@ -121,42 +125,35 @@ return {
         require("main.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
-      local register_capability = vim.lsp.handlers["client/registerCapability"]
+      Util.lsp.setup()
+      Util.lsp.on_dynamic_capability(require("main.plugins.lsp.keymaps").on_attach)
 
-      vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
-        local ret = register_capability(err, res, ctx)
-        local client_id = ctx.client_id
-        ---@type lsp.Client
-        local client = vim.lsp.get_client_by_id(client_id)
-        local buffer = vim.api.nvim_get_current_buf()
-        require("main.plugins.lsp.keymaps").on_attach(client, buffer)
-        return ret
-      end
+      Util.lsp.words.setup(opts.document_highlight)
 
       -- diagnostics
-      for name, icon in pairs(require("config.icons").diagnostics) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      if type(opts.diagnostics.signs) ~= "boolean" then
+        for severity, icon in pairs(opts.diagnostics.signs.text) do
+          local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+          name = "DiagnosticSign" .. name
+          vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+        end
       end
 
+      -- inlay hints
       if opts.inlay_hints.enabled then
-        Util.lsp.on_attach(function(client, buffer)
-          if client.supports_method("textDocument/inlayHint") then
-            Util.toggle.inlay_hints(buffer, true)
-          end
+        Util.lsp.on_supports_method("textDocument/inlayHint", function(client, buffer)
+          Util.toggle.inlay_hints(buffer, true)
         end)
       end
 
+      -- code lens
       if opts.codelens.enabled and vim.lsp.codelens then
-        Util.lsp.on_attach(function(client, buffer)
-          if client.supports_method("textDocument/codeLens") then
-            vim.lsp.codelens.refresh()
-            --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
-            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-              buffer = buffer,
-              callback = vim.lsp.codelens.refresh,
-            })
-          end
+        Util.lsp.on_supports_method("textDocument/codeLens", function(client, buffer)
+          vim.lsp.codelens.refresh()
+          vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+            buffer = buffer,
+            callback = vim.lsp.codelens.refresh,
+          })
         end)
       end
 
@@ -251,6 +248,15 @@ return {
     config = function(_, opts)
       require("mason").setup(opts)
       local mr = require("mason-registry")
+      mr:on("package:install:success", function()
+        vim.defer_fn(function()
+          -- trigger FileType event to possibly load this newly installed LSP server
+          require("lazy.core.handler.event").trigger({
+            event = "FileType",
+            buf = vim.api.nvim_get_current_buf(),
+          })
+        end, 100)
+      end)
       local function ensure_installed()
         for _, tool in ipairs(opts.ensure_installed) do
           local p = mr.get_package(tool)

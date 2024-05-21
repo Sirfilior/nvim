@@ -1,13 +1,33 @@
+local Util = require("util")
 return {
   {
     -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
+    version = false,
     build = ":TSUpdate",
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+    dependencies = {
+      -- comments
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        lazy = true,
+        opts = {
+          enable_autocmd = false,
+        },
+        init = function()
+          vim.schedule(function()
+            local get_option = vim.filetype.get_option
+            vim.filetype.get_option = function(filetype, option)
+              return option == "commentstring"
+                  and require("ts_context_commentstring.internal").calculate_commentstring()
+                or get_option(filetype, option)
+            end
+          end)
+        end,
+      },
+    },
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
       -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
@@ -17,9 +37,11 @@ return {
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
     end,
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+    ---@type TSConfig
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
-      -- Add languages to be installed here that you want installed for treesitter
+      highlight = { enable = true },
+      indent = { enable = true },
       ensure_installed = {
         "query",
         "regex",
@@ -37,12 +59,6 @@ return {
         "css",
         "scss",
       },
-
-      -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-      auto_install = false,
-
-      highlight = { enable = true },
-      indent = { enable = true },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -55,7 +71,6 @@ return {
       textobjects = {
         move = {
           enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
             ["]m"] = "@function.outer",
             ["]]"] = "@class.outer",
@@ -88,15 +103,7 @@ return {
     config = function(_, opts)
       require("util.tsparser").addCustomParsers()
       if type(opts.ensure_installed) == "table" then
-        ---@type table<string, boolean>
-        local added = {}
-        opts.ensure_installed = vim.tbl_filter(function(lang)
-          if added[lang] then
-            return false
-          end
-          added[lang] = true
-          return true
-        end, opts.ensure_installed)
+        opts.ensure_installed = Util.dedup(opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
@@ -123,5 +130,44 @@ return {
         desc = "Toggle Treesitter Context",
       },
     },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
+    enabled = true,
+    config = function()
+      -- If treesitter is already loaded, we need to run config again for textobjects
+      if Util.is_loaded("nvim-treesitter") then
+        local opts = Util.opts("nvim-treesitter")
+        require("nvim-treesitter.configs").setup({ textobjects = opts.textobjects })
+      end
+
+      -- When in diff mode, we want to use the default
+      -- vim text objects c & C instead of the treesitter ones.
+      local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
+      local configs = require("nvim-treesitter.configs")
+      for name, fn in pairs(move) do
+        if name:find("goto") == 1 then
+          move[name] = function(q, ...)
+            if vim.wo.diff then
+              local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
+              for key, query in pairs(config or {}) do
+                if q == query and key:find("[%]%[][cC]") then
+                  vim.cmd("normal! " .. key)
+                  return
+                end
+              end
+            end
+            return fn(q, ...)
+          end
+        end
+      end
+    end,
+  },
+  -- Automatically add closing tags for HTML and JSX
+  {
+    "windwp/nvim-ts-autotag",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {},
   },
 }

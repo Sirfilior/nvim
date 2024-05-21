@@ -1,9 +1,11 @@
+local have_make = vim.fn.executable("make") == 1
+local have_cmake = vim.fn.executable("cmake") == 1
 local Util = require("util")
 return {
   -- Fuzzy Finder (files, lsp, etc)
   {
     "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
+    version = false,
     cmd = "Telescope",
     dependencies = {
       {
@@ -15,14 +17,35 @@ return {
       },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        config = function()
-          require("telescope").load_extension("fzf")
+        build = have_make and "make"
+          or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        enabled = have_make or have_cmake,
+        config = function(plugin)
+          Util.on_load("telescope.nvim", function()
+            local ok, err = pcall(require("telescope").load_extension, "fzf")
+            if not ok then
+              local lib = plugin.dir .. "/build/libfzf." .. (Util.is_win() and "dll" or "so")
+              if not vim.uv.fs_stat(lib) then
+                Util.warn("`telescope-fzf-native.nvim` not built. Rebuilding...")
+                require("lazy").build({ plugins = { plugin }, show = false }):wait(function()
+                  Util.info("Rebuilding `telescope-fzf-native.nvim` done.\nPlease restart Neovim.")
+                end)
+              else
+                Util.error("Failed to load `telescope-fzf-native.nvim`:\n" .. err)
+              end
+            end
+          end)
         end,
       },
     },
     opts = function()
-      local open_with_trouble = require("trouble.sources.telescope").open
+      local actions = require("telescope.actions")
+      local open_with_trouble = function(...)
+        return require("trouble.providers.telescope").open_with_trouble(...)
+      end
+      local open_selected_with_trouble = function(...)
+        return require("trouble.providers.telescope").open_selected_with_trouble(...)
+      end
       local harpoonAction = require("util.telescope.harpoonAction")
       local flashAction = require("util.telescope.flashAction")
       return {
@@ -48,13 +71,17 @@ return {
               ["<C-u>"] = false,
               ["<C-d>"] = false,
               ["<C-a>"] = harpoonAction,
-              ["<C-f>"] = flashAction,
               ["<c-t>"] = open_with_trouble,
+              ["<a-t>"] = open_selected_with_trouble,
+              ["<C-Down>"] = actions.cycle_history_next,
+              ["<C-Up>"] = actions.cycle_history_prev,
+              ["<C-f>"] = actions.preview_scrolling_down,
+              ["<C-b>"] = actions.preview_scrolling_up,
             },
             n = {
               ["a"] = harpoonAction,
-              ["f"] = flashAction,
               ["<c-t>"] = open_with_trouble,
+              ["q"] = actions.close,
             },
           },
         },
@@ -168,6 +195,7 @@ return {
         desc = "[S]earch [D]iagnostics",
       },
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
       {
         "<leader>sS",
         function()

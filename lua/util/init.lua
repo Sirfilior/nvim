@@ -54,6 +54,18 @@ function M.has(plugin)
   return require("lazy.core.config").spec.plugins[plugin] ~= nil
 end
 
+function M.is_loaded(name)
+  local Config = require("lazy.core.config")
+  return Config.plugins[name] and Config.plugins[name]._.loaded
+end
+
+M.CREATE_UNDO = vim.api.nvim_replace_termcodes("<c-G>u", true, true, true)
+function M.create_undo()
+  if vim.api.nvim_get_mode().mode == "i" then
+    vim.api.nvim_feedkeys(M.CREATE_UNDO, "n", false)
+  end
+end
+
 ---@param name string
 function M.opts(name)
   local plugin = require("lazy.core.config").plugins[name]
@@ -62,6 +74,21 @@ function M.opts(name)
   end
   local Plugin = require("lazy.core.plugin")
   return Plugin.values(plugin, "opts", false)
+end
+
+---@generic T
+---@param list T[]
+---@return T[]
+function M.dedup(list)
+  local ret = {}
+  local seen = {}
+  for _, v in ipairs(list) do
+    if not seen[v] then
+      table.insert(ret, v)
+      seen[v] = true
+    end
+  end
+  return ret
 end
 
 function M.colorize()
