@@ -10,8 +10,14 @@ return {
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      { "rafamadriz/friendly-snippets" },
-      { "garymjr/nvim-snippets", opts = { friendly_snippets = true } },
+      {
+        "garymjr/nvim-snippets",
+        opts = {
+          friendly_snippets = true,
+          global_snippets = { "all", "global" },
+        },
+        dependencies = { "rafamadriz/friendly-snippets" },
+      },
     },
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -93,6 +99,15 @@ return {
       local Util = require("util")
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
+      end
+
+      local parse = require("cmp.utils.snippet").parse
+      require("cmp.utils.snippet").parse = function(input)
+        local ok, ret = pcall(parse, input)
+        if ok then
+          return ret
+        end
+        return Util.cmp.snippet_preview(input)
       end
 
       local cmp = require("cmp")

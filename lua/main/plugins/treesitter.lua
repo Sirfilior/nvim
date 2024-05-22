@@ -7,26 +7,6 @@ return {
     build = ":TSUpdate",
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     event = { "BufReadPost", "BufNewFile", "VeryLazy" },
-    dependencies = {
-      -- comments
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring",
-        lazy = true,
-        opts = {
-          enable_autocmd = false,
-        },
-        init = function()
-          vim.schedule(function()
-            local get_option = vim.filetype.get_option
-            vim.filetype.get_option = function(filetype, option)
-              return option == "commentstring"
-                  and require("ts_context_commentstring.internal").calculate_commentstring()
-                or get_option(filetype, option)
-            end
-          end)
-        end,
-      },
-    },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
@@ -107,6 +87,30 @@ return {
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+  -- comments
+  {
+    "folke/ts-comments.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
+    "echasnovski/mini.comment",
+    event = "VeryLazy",
+    opts = {
+      options = {
+        custom_commentstring = function()
+          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+        end,
+      },
+    },
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = true,
+    opts = {
+      enable_autocmd = false,
+    },
   },
   -- Show context of the current function
   {

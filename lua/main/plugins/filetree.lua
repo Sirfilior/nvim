@@ -67,12 +67,6 @@ return {
         folder_empty = "󰜌",
         folder_empty_open = "󰜌",
       },
-      git_status = {
-        symbols = {
-          renamed = "󰁕",
-          unstaged = "󰄱",
-        },
-      },
       file_size = {
         enabled = false,
       },
@@ -81,6 +75,18 @@ return {
       },
       last_modified = {
         enabled = false,
+      },
+      indent = {
+        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+        expander_collapsed = "",
+        expander_expanded = "",
+        expander_highlight = "NeoTreeExpander",
+      },
+      git_status = {
+        symbols = {
+          unstaged = "󰄱",
+          staged = "󰱒",
+        },
       },
     },
     filesystem = {
