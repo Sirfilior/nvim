@@ -19,6 +19,26 @@ return {
         dependencies = { "rafamadriz/friendly-snippets" },
       },
     },
+    keys = {
+      {
+        "<C-k>",
+        function()
+          return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
+        end,
+        expr = true,
+        silent = true,
+        mode = { "i", "s" },
+      },
+      {
+        "<C-j>",
+        function()
+          return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<Tab>"
+        end,
+        expr = true,
+        silent = true,
+        mode = { "i", "s" },
+      },
+    },
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
@@ -29,26 +49,6 @@ return {
         auto_brackets = {},
         completion = {
           completeopt = "menu,menuone,noinsert",
-        },
-        keys = {
-          {
-            "<c-k>",
-            function()
-              return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = { "i", "s" },
-          },
-          {
-            "<c-j>",
-            function()
-              return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<Tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = { "i", "s" },
-          },
         },
         snippet = {
           expand = function(item)
