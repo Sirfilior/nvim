@@ -12,7 +12,7 @@ return {
         auto_insert_mode = true,
         show_help = true,
         question_header = "  " .. user .. " ",
-        answer_header = "  Copilot ",
+        answer_header = "󱜙 Copilot ",
         window = {
           width = 0.4,
         },
