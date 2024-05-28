@@ -142,7 +142,9 @@ return {
       -- inlay hints
       if opts.inlay_hints.enabled then
         Util.lsp.on_supports_method("textDocument/inlayHint", function(client, buffer)
-          Util.toggle.inlay_hints(buffer, true)
+          if vim.api.nvim_buf_is_valid(buffer) and vim.bo[buffer].buftype == "" then
+            Util.toggle.inlay_hints(buffer, true)
+          end
         end)
       end
 
