@@ -9,13 +9,21 @@ return {
       end
     end,
   },
-  -- Ensure PHP tools are installed
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "pint",
+      })
+    end,
+  },
   {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
+      ---@type table<string, conform.FiletypeFormatter>
       formatters_by_ft = {
-        twig = { "twig-cs-fixer" },
+        ["php"] = { "pint" },
       },
     },
   },
