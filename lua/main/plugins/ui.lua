@@ -207,7 +207,7 @@ return {
             { action = "Neotree",                                                  desc = " Explorer",        icon = " ", key = "t" },
             { action = "ene | startinsert",                                        desc = " New file",        icon = " ", key = "n" },
             { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
-            { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
+            { action = "Lazy",                                                     desc = " Lazy",            icon = " ", key = "l" },
             { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
           },
           footer = function()
