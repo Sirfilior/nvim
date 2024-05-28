@@ -1,12 +1,15 @@
+local Util = require("util")
 local M = {}
 
----@type PluginLspKeys
+---@type LazyKeysLspSpec[]|nil
 M._keys = nil
 
----@return (LazyKeys|{has?:string})[]
+---@alias LazyKeysLspSpec LazyKeysSpec|{has?:string, cond?:fun():boolean}
+---@alias LazyKeysLsp LazyKeys|{has?:string, cond?:fun():boolean}
+
+---@return LazyKeysLspSpec[]
 function M.get()
   if not M._keys then
-  ---@class PluginLspKeys
     -- stylua: ignore
     M._keys =  {
 
@@ -52,6 +55,14 @@ function M.get()
         desc = "Source Action",
         has = "codeAction",
       },
+      { "]]", function() Util.lsp.words.jump(vim.v.count1) end, has = "documentHighlight",
+        desc = "Next Reference", cond = function() return Util.lsp.words.enabled end },
+      { "[[", function() Util.lsp.words.jump(-vim.v.count1) end, has = "documentHighlight",
+        desc = "Prev Reference", cond = function() return Util.lsp.words.enabled end },
+      { "<a-n>", function() Util.lsp.words.jump(vim.v.count1, true) end, has = "documentHighlight",
+        desc = "Next Reference", cond = function() return Util.lsp.words.enabled end },
+      { "<a-p>", function() Util.lsp.words.jump(-vim.v.count1, true) end, has = "documentHighlight",
+        desc = "Prev Reference", cond = function() return Util.lsp.words.enabled end },
     }
   end
   return M._keys
@@ -69,7 +80,7 @@ function M.has(buffer, method)
   return false
 end
 
----@return (LazyKeys|{has?:string})[]
+---@return LazyKeysLsp[]
 function M.resolve(buffer)
   local Keys = require("lazy.core.handler.keys")
   if not Keys.resolve then
@@ -90,8 +101,12 @@ function M.on_attach(_, buffer)
   local keymaps = M.resolve(buffer)
 
   for _, keys in pairs(keymaps) do
-    if not keys.has or M.has(buffer, keys.has) then
+    local has = not keys.has or M.has(buffer, keys.has)
+    local cond = not (keys.cond == false or ((type(keys.cond) == "function") and not keys.cond()))
+
+    if has and cond then
       local opts = Keys.opts(keys)
+      opts.cond = nil
       opts.has = nil
       opts.silent = opts.silent ~= false
       opts.buffer = buffer
