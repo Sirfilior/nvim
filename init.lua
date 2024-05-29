@@ -49,6 +49,7 @@ require("lazy").setup({
   { import = "extra.plugins.kitty" },
   -- { import = "extra.plugins.stylelint" },
 
+  { import = "scrap.plugins.experiments" },
   { import = "scrap.plugins.cellular" },
   { import = "scrap.plugins.typo3" },
 }, {})
