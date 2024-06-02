@@ -91,7 +91,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    branch = "dev",
+    opts = { use_diagnostic_signs = true },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },

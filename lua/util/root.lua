@@ -1,6 +1,5 @@
 local Util = require("util")
-
----@class util.root
+---@class lazyvim.util.root
 ---@overload fun(): string
 local M = setmetatable({}, {
   __call = function(m)
@@ -22,7 +21,7 @@ M.spec = { "lsp", { ".git", "lua" }, "cwd" }
 M.detectors = {}
 
 function M.detectors.cwd()
-  return { vim.loop.cwd() }
+  return { vim.uv.cwd() }
 end
 
 function M.detectors.lsp(buf)
@@ -32,12 +31,11 @@ function M.detectors.lsp(buf)
   end
   local roots = {} ---@type string[]
   for _, client in pairs(Util.lsp.get_clients({ bufnr = buf })) do
+    -- only check workspace folders, since we're not interested in clients
+    -- running in single file mode
     local workspace = client.config.workspace_folders
     for _, ws in pairs(workspace or {}) do
       roots[#roots + 1] = vim.uri_to_fname(ws.uri)
-    end
-    if client.config.root_dir then
-      roots[#roots + 1] = client.config.root_dir
     end
   end
   return vim.tbl_filter(function(path)
@@ -49,8 +47,18 @@ end
 ---@param patterns string[]|string
 function M.detectors.pattern(buf, patterns)
   patterns = type(patterns) == "string" and { patterns } or patterns
-  local path = M.bufpath(buf) or vim.loop.cwd()
-  local pattern = vim.fs.find(patterns, { path = path, upward = true })[1]
+  local path = M.bufpath(buf) or vim.uv.cwd()
+  local pattern = vim.fs.find(function(name)
+    for _, p in ipairs(patterns) do
+      if name == p then
+        return true
+      end
+      if p:sub(1, 1) == "*" and name:find(vim.pesc(p:sub(2)) .. "$") then
+        return true
+      end
+    end
+    return false
+  end, { path = path, upward = true })[1]
   return pattern and { vim.fs.dirname(pattern) } or {}
 end
 
@@ -59,14 +67,14 @@ function M.bufpath(buf)
 end
 
 function M.cwd()
-  return M.realpath(vim.loop.cwd()) or ""
+  return M.realpath(vim.uv.cwd()) or ""
 end
 
 function M.realpath(path)
   if path == "" or path == nil then
     return nil
   end
-  path = vim.loop.fs_realpath(path) or path
+  path = vim.uv.fs_realpath(path) or path
   return Util.norm(path)
 end
 
@@ -133,8 +141,8 @@ function M.info()
   lines[#lines + 1] = "```lua"
   lines[#lines + 1] = "vim.g.root_spec = " .. vim.inspect(spec)
   lines[#lines + 1] = "```"
-  require("util").root.info(lines, { title = "Roots" })
-  return roots[1] and roots[1].paths[1] or vim.loop.cwd()
+  Util.info(lines, { title = "LazyVim Roots" })
+  return roots[1] and roots[1].paths[1] or vim.uv.cwd()
 end
 
 ---@type table<number, string>
@@ -145,7 +153,10 @@ function M.setup()
     Util.root.info()
   end, { desc = "LazyVim roots for the current buffer" })
 
-  vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged" }, {
+  -- FIX: doesn't properly clear cache in neo-tree `set_root` (which should happen presumably on `DirChanged`),
+  -- probably because the event is triggered in the neo-tree buffer, therefore add `BufEnter`
+  -- Maybe this is too frequent on `BufEnter` and something else should be done instead??
+  vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged", "BufEnter" }, {
     group = vim.api.nvim_create_augroup("lazyvim_root_cache", { clear = true }),
     callback = function(event)
       M.cache[event.buf] = nil
@@ -165,13 +176,25 @@ function M.get(opts)
   local ret = M.cache[buf]
   if not ret then
     local roots = M.detect({ all = false })
-    ret = roots[1] and roots[1].paths[1] or vim.loop.cwd()
+    ret = roots[1] and roots[1].paths[1] or vim.uv.cwd()
     M.cache[buf] = ret
   end
   if opts and opts.normalize then
     return ret
   end
+  return Util.is_win() and ret:gsub("/", "\\") or ret
+end
+
+function M.git()
+  local root = M.get()
+  local git_root = vim.fs.find(".git", { path = root, upward = true })[1]
+  local ret = git_root and vim.fn.fnamemodify(git_root, ":h") or root
   return ret
+end
+
+---@param opts? {hl_last?: string}
+function M.pretty_path(opts)
+  return ""
 end
 
 return M

@@ -40,14 +40,8 @@ return {
     },
     opts = function()
       local actions = require("telescope.actions")
-      local open_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_with_trouble(...)
-      end
-      local open_selected_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_selected_with_trouble(...)
-      end
+      local open_with_trouble = require("trouble.sources.telescope").open
       local harpoonAction = require("util.telescope.harpoonAction")
-      local flashAction = require("util.telescope.flashAction")
       return {
         defaults = {
           prompt_prefix = " ",
@@ -72,7 +66,7 @@ return {
               ["<C-d>"] = false,
               ["<C-a>"] = harpoonAction,
               ["<c-t>"] = open_with_trouble,
-              ["<a-t>"] = open_selected_with_trouble,
+              ["<a-t>"] = open_with_trouble,
               ["<C-Down>"] = actions.cycle_history_next,
               ["<C-Up>"] = actions.cycle_history_prev,
               ["<C-f>"] = actions.preview_scrolling_down,

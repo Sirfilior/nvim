@@ -56,7 +56,14 @@ return {
         enabled = true,
       },
       -- add any global capabilities here
-      capabilities = {},
+      capabilities = {
+        workspace = {
+          fileOperations = {
+            didRename = true,
+            willRename = true,
+          },
+        },
+      },
       -- Automatically format on save
       autoformat = true,
       -- Enable this to show formatters used in a notification

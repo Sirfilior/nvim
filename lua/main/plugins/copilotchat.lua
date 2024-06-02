@@ -54,17 +54,17 @@ return {
     init = function()
       Util.on_load("which-key.nvim", function()
         vim.schedule(function()
-          require("which-key").register({ a = { name = "+CopilotChat (AI)" } }, { prefix = "<leader>" })
+          require("which-key").register({ a = { name = "+ai" } }, { prefix = "<leader>" })
         end)
       end)
     end,
     config = function(_, opts)
       local chat = require("CopilotChat")
-      local ns = vim.api.nvim_create_namespace("copilot-chat-text-hl")
+      require("CopilotChat.integrations.cmp").setup()
 
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "copilot-chat",
-        callback = function(ev)
+        callback = function()
           vim.opt_local.relativenumber = false
           vim.opt_local.number = false
         end,
