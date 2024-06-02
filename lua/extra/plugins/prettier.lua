@@ -15,6 +15,8 @@ return {
         ["typescript"] = { "prettier" },
         ["typescriptreact"] = { "prettier" },
         ["vue"] = { "prettier" },
+        ["astro"] = { "prettier" },
+        ["svelte"] = { "prettier" },
         ["css"] = { "prettier" },
         ["scss"] = { "prettier" },
         ["less"] = { "prettier" },
