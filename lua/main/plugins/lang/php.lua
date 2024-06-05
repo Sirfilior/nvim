@@ -13,7 +13,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-        "pint",
+        "php-cs-fixer",
       })
     end,
   },
@@ -23,7 +23,7 @@ return {
     opts = {
       ---@type table<string, conform.FiletypeFormatter>
       formatters_by_ft = {
-        ["php"] = { "pint" },
+        ["php"] = { "php_cs_fixer" },
       },
     },
   },
