@@ -29,7 +29,7 @@ return {
       Util.extend(opts.servers.vtsls, "settings.vtsls.tsserver.globalPlugins", {
         {
           name = "@astrojs/ts-plugin",
-          location = Util.get_pkg_path("astro-language-server", "/node_modules/@astrojs/ts-plugin", { warn = false }),
+          location = Util.get_pkg_path("astro-language-server", "/node_modules/@astrojs/ts-plugin"),
           enableForWorkspaceTypeScriptVersions = true,
         },
       })

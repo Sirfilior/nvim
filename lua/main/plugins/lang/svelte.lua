@@ -29,11 +29,7 @@ return {
       Util.extend(opts.servers.vtsls, "settings.vtsls.tsserver.globalPlugins", {
         {
           name = "typescript-svelte-plugin",
-          location = Util.get_pkg_path(
-            "svelte-language-server",
-            "/node_modules/typescript-svelte-plugin",
-            { warn = false }
-          ),
+          location = Util.get_pkg_path("svelte-language-server", "/node_modules/typescript-svelte-plugin"),
           enableForWorkspaceTypeScriptVersions = true,
         },
       })
