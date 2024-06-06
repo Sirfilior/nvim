@@ -1,6 +1,4 @@
-vim.g.lazyvim_prettier_needs_config = true
-
-local needs_config = vim.g.lazyvim_prettier_needs_config ~= false
+local needs_config = true
 
 -- local check = vim.g.lazyvim_prettier
 
