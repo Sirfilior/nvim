@@ -1,9 +1,9 @@
 local Util = require("util")
 ---
----@class lazyvim.util.cmp
+---@class main.util.cmp
 local M = {}
 
----@class lazyvim.util.cmp
+---@class main.util.cmp
 local M = {}
 
 ---@alias Placeholder {n:number, text:string}

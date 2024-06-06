@@ -1,6 +1,6 @@
 local Util = require("util")
 
----@class lazyvim.util.lsp
+---@class main.util.lsp
 local M = {}
 
 ---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: lsp.Client):boolean}
@@ -277,7 +277,7 @@ function M.words.setup(opts)
       group = vim.api.nvim_create_augroup("lsp_word_" .. buf, { clear = true }),
       buffer = buf,
       callback = function(ev)
-        if not require("lazyvim.plugins.lsp.keymaps").has(buf, "documentHighlight") then
+        if not require("main.plugins.lsp.keymaps").has(buf, "documentHighlight") then
           return false
         end
         if not ({ M.words.get() })[2] then

@@ -76,7 +76,7 @@ return {
         Util.error({
           "Don't set `plugin.config` for `conform.nvim`.\n",
           "This will break **LazyVim** formatting.\n",
-          "Please refer to the docs at https://www.lazyvim.org/plugins/formatting",
+          "Please refer to the docs at https://www.main.org/plugins/formatting",
         }, { title = "LazyVim" })
       end
       ---@class ConformOpts

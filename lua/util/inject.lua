@@ -1,4 +1,4 @@
----@class lazyvim.util.inject
+---@class main.util.inject
 local M = {}
 
 ---@generic A: any
