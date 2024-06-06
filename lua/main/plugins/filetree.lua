@@ -100,6 +100,8 @@ return {
       window = {
         position = "current",
         mappings = {
+          ["l"] = "open",
+          ["h"] = "close_node",
           ["f"] = "noop",
           ["fs"] = "telescope_find",
           ["fg"] = "telescope_grep",
