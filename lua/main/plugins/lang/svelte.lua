@@ -1,7 +1,7 @@
 local Util = require("util")
 return {
   -- depends on the typescript extra
-  { import = "main.plugins.lang.typescript" },
+  { import = "lazyvim.plugins.extras.lang.typescript" },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -17,7 +17,20 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        svelte = {},
+        svelte = {
+          keys = {
+            {
+              "<leader>co",
+              Util.lsp.action["source.organizeImports"],
+              desc = "Organize Imports",
+            },
+          },
+          capabilities = {
+            workspace = {
+              didChangeWatchedFiles = vim.fn.has("nvim-0.10") == 0 and { dynamicRegistration = true },
+            },
+          },
+        },
       },
     },
   },

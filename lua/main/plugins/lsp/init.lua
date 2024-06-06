@@ -95,13 +95,25 @@ return {
         lua_ls = {
           settings = {
             Lua = {
-              workspace = { checkThirdParty = false },
+              workspace = {
+                checkThirdParty = false,
+              },
               codeLens = {
                 enable = true,
               },
-              telemetry = { enable = false },
               completion = {
                 callSnippet = "Replace",
+              },
+              doc = {
+                privateName = { "^_" },
+              },
+              hint = {
+                enable = true,
+                setType = false,
+                paramType = true,
+                paramName = "Disable",
+                semicolon = "Disable",
+                arrayIndex = "Disable",
               },
             },
           },

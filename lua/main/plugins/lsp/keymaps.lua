@@ -42,21 +42,7 @@ function M.get()
       { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
       { "<leader>cR", Util.lsp.rename_file, desc = "Rename File", mode ={"n"}, has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
       { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
-      {
-        "<leader>cA",
-        function()
-          vim.lsp.buf.code_action({
-            context = {
-              only = {
-                "source",
-              },
-              diagnostics = {},
-            },
-          })
-        end,
-        desc = "Source Action",
-        has = "codeAction",
-      },
+      { "<leader>cA", Util.lsp.action.source, desc = "Source Action", has = "codeAction" },
       { "]]", function() Util.lsp.words.jump(vim.v.count1) end, has = "documentHighlight",
         desc = "Next Reference", cond = function() return Util.lsp.words.enabled end },
       { "[[", function() Util.lsp.words.jump(-vim.v.count1) end, has = "documentHighlight",

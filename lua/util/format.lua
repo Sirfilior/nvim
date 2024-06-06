@@ -25,6 +25,13 @@ function M.register(formatter)
   end)
 end
 
+function M.formatexpr()
+  if Util.has("conform.nvim") then
+    return require("conform").formatexpr()
+  end
+  return vim.lsp.formatexpr({ timeout_ms = 3000 })
+end
+
 ---@param buf? number
 ---@return (LazyFormatter|{active:boolean,resolved:string[]})[]
 function M.resolve(buf)
@@ -120,11 +127,30 @@ function M.format(opts)
   end
 
   if not done and opts and opts.force then
-    Util.warn("No formatter available", { title = "Formatter" })
+    Util.warn("No formatter available", { title = "LazyVim" })
+  end
+end
+
+function M.health()
+  local Config = require("lazy.core.config")
+  local has_plugin = Config.spec.plugins["none-ls.nvim"]
+  local has_extra = vim.tbl_contains(Config.spec.modules, "lazyvim.plugins.extras.lsp.none-ls")
+  if has_plugin and not has_extra then
+    Util.warn({
+      "`conform.nvim` and `nvim-lint` are now the default formatters and linters in LazyVim.",
+      "",
+      "You can use those plugins together with `none-ls.nvim`,",
+      "but you need to enable the `lazyvim.plugins.extras.lsp.none-ls` extra,",
+      "for formatting to work correctly.",
+      "",
+      "In case you no longer want to use `none-ls.nvim`, just remove the spec from your config.",
+    })
   end
 end
 
 function M.setup()
+  M.health()
+
   -- Autoformat autocmd
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("LazyFormat", {}),
@@ -137,11 +163,6 @@ function M.setup()
   vim.api.nvim_create_user_command("LazyFormat", function()
     M.format({ force = true })
   end, { desc = "Format selection or buffer" })
-
-  -- Vim format
-  vim.api.nvim_create_user_command("LazyFormatLsp", function()
-    vim.lsp.buf.format()
-  end, { desc = "Format with builtin only" })
 
   -- Format info
   vim.api.nvim_create_user_command("LazyFormatInfo", function()

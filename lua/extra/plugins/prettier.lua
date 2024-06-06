@@ -1,8 +1,25 @@
+vim.g.lazyvim_prettier_needs_config = true
+
+local needs_config = vim.g.lazyvim_prettier_needs_config ~= false
+
+-- local check = vim.g.lazyvim_prettier
+
+local enabled = {} ---@type table<string, boolean>
+
 return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       table.insert(opts.ensure_installed, "prettier")
+    end,
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    optional = true,
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, nls.builtins.formatting.prettier)
     end,
   },
   {
@@ -15,8 +32,6 @@ return {
         ["typescript"] = { "prettier" },
         ["typescriptreact"] = { "prettier" },
         ["vue"] = { "prettier" },
-        ["astro"] = { "prettier" },
-        ["svelte"] = { "prettier" },
         ["css"] = { "prettier" },
         ["scss"] = { "prettier" },
         ["less"] = { "prettier" },
@@ -28,6 +43,22 @@ return {
         ["markdown.mdx"] = { "prettier" },
         ["graphql"] = { "prettier" },
         ["handlebars"] = { "prettier" },
+        ["svelte"] = { "prettier" },
+      },
+      formatters = {
+        prettier = {
+          condition = function(_, ctx)
+            if not needs_config then
+              return true
+            end
+            if enabled[ctx.filename] == nil then
+              enabled[ctx.filename] = vim.fs.find(function(name, path)
+                return name:match("^%.prettierrc%.") or name:match("^prettier%.config%.")
+              end, { path = ctx.filename, upward = true })[1] ~= nil
+            end
+            return enabled[ctx.filename]
+          end,
+        },
       },
     },
   },
