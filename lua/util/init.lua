@@ -152,4 +152,26 @@ function M.colorize()
   end, 2000)
 end
 
+--- Override the default title for notifications.
+for _, level in ipairs({ "info", "warn", "error" }) do
+  M[level] = function(msg, opts)
+    opts = opts or {}
+    opts.title = opts.title or "Neo:"
+    return LazyUtil[level](msg, opts)
+  end
+end
+
+local cache = {} ---@type table<string, any>
+---@generic T: fun()
+---@param fn T
+---@return T
+function M.memoize(fn)
+  return function(...)
+    local key = vim.inspect({ ... })
+    if cache[key] == nil then
+      cache[key] = fn(...)
+    end
+    return cache[key]
+  end
+end
 return M
