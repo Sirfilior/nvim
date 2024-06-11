@@ -14,6 +14,7 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "php-cs-fixer",
+        "phpcs",
       })
     end,
   },
@@ -24,6 +25,25 @@ return {
       ---@type table<string, conform.FiletypeFormatter>
       formatters_by_ft = {
         ["php"] = { "php_cs_fixer" },
+      },
+    },
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    optional = true,
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, nls.builtins.formatting.phpcsfixer)
+      table.insert(opts.sources, nls.builtins.diagnostics.phpcs)
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters_by_ft = {
+        php = { "phpcs" },
       },
     },
   },
