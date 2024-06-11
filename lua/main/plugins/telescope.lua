@@ -42,6 +42,16 @@ return {
       local actions = require("telescope.actions")
       local open_with_trouble = require("trouble.sources.telescope").open
       local harpoonAction = require("util.telescope.harpoonAction")
+      local find_files_no_ignore = function()
+        local action_state = require("telescope.actions.state")
+        local line = action_state.get_current_line()
+        Util.pick("find_files", { no_ignore = true, default_text = line })()
+      end
+      local find_files_with_hidden = function()
+        local action_state = require("telescope.actions.state")
+        local line = action_state.get_current_line()
+        Util.pick("find_files", { hidden = true, default_text = line })()
+      end
       return {
         defaults = {
           prompt_prefix = " ",
@@ -71,6 +81,8 @@ return {
               ["<C-Up>"] = actions.cycle_history_prev,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
+              ["<a-i>"] = find_files_no_ignore,
+              ["<a-h>"] = find_files_with_hidden,
             },
             n = {
               ["a"] = harpoonAction,
@@ -148,9 +160,7 @@ return {
       },
       {
         "<leader>sw",
-        function()
-          require("telescope.builtin").grep_string()
-        end,
+        Util.pick("grep_string"),
         desc = "[S]earch current [W]ord",
       },
       {
@@ -159,20 +169,6 @@ return {
           require("util.telescope").multi_rg()
         end,
         desc = "[S]earch [G]rep",
-      },
-      {
-        "<leader>sgh",
-        function()
-          require("telescope.builtin").live_grep({ additional_args = { "--hidden" } })
-        end,
-        desc = "[S]earch by [G]rep including [H]idden",
-      },
-      {
-        "<leader>sgi",
-        function()
-          require("telescope.builtin").live_grep({ additional_args = { "--no-ignore" } })
-        end,
-        desc = "[S]earch by [G]rep including [I]gnored",
       },
       {
         "<leader>sgr",
