@@ -102,10 +102,10 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- windows and splits
-vim.keymap.set("n", "<C-J>", "<C-W><C-J>", { noremap = true, desc = "Easier Moving between splits" })
-vim.keymap.set("n", "<C-K>", "<C-W><C-K>", { noremap = true, desc = "Easier Moving between splits" })
-vim.keymap.set("n", "<C-L>", "<C-W><C-L>", { noremap = true, desc = "Easier Moving between splits" })
-vim.keymap.set("n", "<C-H>", "<C-W><C-H>", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, desc = "Easier Moving between splits" })
+vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, desc = "Easier Moving between splits" })
 
 vim.keymap.set("n", "<c-,>", "<C-W><", { noremap = true, desc = "Sizing window horizontally" })
 vim.keymap.set("n", "<c-.>", "<C-W>>", { noremap = true, desc = "Sizing window horizontally" })
@@ -114,3 +114,22 @@ vim.keymap.set("n", "<A-.>", "<C-W>5>", { noremap = true, desc = "Sizing window 
 
 vim.keymap.set("n", "<A-t>", "<C-W>+", { noremap = true, desc = "Sizing window vertically - taller" })
 vim.keymap.set("n", "<A-s>", "<C-W>-", { noremap = true, desc = "Sizing window vertically - shorter" })
+
+-- windows
+vim.keymap.set("n", "<leader>ww", "<C-W>p", { noremap = true, silent = true, desc = "Other Window" })
+vim.keymap.set("n", "<leader>wd", "<C-W>c", { noremap = true, silent = true, desc = "Delete Window" })
+vim.keymap.set("n", "<leader>w-", "<C-W>s", { noremap = true, silent = true, desc = "Split Window Below" })
+vim.keymap.set("n", "<leader>w|", "<C-W>v", { noremap = true, silent = true, desc = "Split Window Right" })
+vim.keymap.set("n", "<leader>-", "<C-W>s", { noremap = true, silent = true, desc = "Split Window Below" })
+vim.keymap.set("n", "<leader>|", "<C-W>v", { noremap = true, silent = true, desc = "Split Window Right" })
+
+-- tabs
+vim.keymap.set("n", "<leader><tab>l", "<cmd>tablast<cr>", { noremap = true, silent = true, desc = "Last Tab" })
+vim.keymap.set("n", "<leader><tab>o", "<cmd>tabonly<cr>", { noremap = true, silent = true, desc = "Close Other Tabs" })
+vim.keymap.set("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { noremap = true, silent = true, desc = "First Tab" })
+vim.keymap.set("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { noremap = true, silent = true, desc = "New Tab" })
+vim.keymap.set("n", "<leader><tab>]", "<cmd>tabnext<cr>", { noremap = true, silent = true, desc = "Next Tab" })
+vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { noremap = true, silent = true, desc = "Close Tab" })
+vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { noremap = true, silent = true, desc = "Previous Tab" })
+
+Util.wez.wezterm()
