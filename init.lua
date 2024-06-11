@@ -43,6 +43,7 @@ require("lazy").setup({
   { import = "main.plugins.lang.kotlin" },
   { import = "main.plugins.lang.omnisharp" },
 
+  -- { import = "extra.plugins.fzf" },
   { import = "extra.plugins.vscode" },
   { import = "extra.plugins.eslint" },
   { import = "extra.plugins.prettier" },

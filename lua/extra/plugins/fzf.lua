@@ -170,7 +170,6 @@ return {
       { "<leader>sW", Util.pick("grep_cword", { root = false }), desc = "Word (cwd)" },
       { "<leader>sw", Util.pick("grep_visual"), mode = "v", desc = "Selection (Root Dir)" },
       { "<leader>sW", Util.pick("grep_visual", { root = false }), mode = "v", desc = "Selection (cwd)" },
-      { "<leader>uC", Util.pick("colorschemes"), desc = "Colorscheme with Preview" },
       {
         "<leader>ss",
         function()

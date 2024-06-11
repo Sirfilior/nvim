@@ -170,6 +170,7 @@ return {
     "nvimdev/dashboard-nvim",
     event = "VimEnter",
     opts = function()
+      local Util = require("util")
       local logo = [[
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣤⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠲⠾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -202,12 +203,13 @@ return {
           header = vim.split(logo, "\n"),
           -- stylua: ignore
           center = {
-            { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "f" },
-            { action = function () require("util.telescope").multi_rg() end,       desc = " Search",          icon = " ", key = "s" },
+            { action = Util.pick(),                                     desc = " Find file",       icon = " ", key = "f" },
+            { action = Util.pick("live_grep"),                                     desc = " Search",          icon = " ", key = "s" },
             { action = "Neotree",                                                  desc = " Explorer",        icon = " ", key = "t" },
             { action = "ene | startinsert",                                        desc = " New file",        icon = " ", key = "n" },
-            { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
+            { action = Util.pick("oldfiles"),                                      desc = " Recent files",    icon = " ", key = "r" },
             { action = "Lazy",                                                     desc = " Lazy",            icon = " ", key = "l" },
+            { action = Util.pick.config_files(),                                   desc = " Config",          icon = " ", key = "c" },
             { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
           },
           footer = function()

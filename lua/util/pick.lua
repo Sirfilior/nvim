@@ -1,3 +1,5 @@
+local Util = require("util")
+
 ---@class lazyvim.util.pick
 ---@overload fun(command:string, opts?:lazyvim.util.pick.Opts): fun()
 local M = setmetatable({}, {
@@ -26,12 +28,12 @@ function M.open(command, opts)
   opts = vim.deepcopy(opts)
 
   if type(opts.cwd) == "boolean" then
-    LazyVim.warn("LazyVim.pick: opts.cwd should be a string or nil")
+    Util.warn("LazyVim.pick: opts.cwd should be a string or nil")
     opts.cwd = nil
   end
 
   if not opts.cwd and opts.root ~= false then
-    opts.cwd = LazyVim.root({ buf = opts.buf })
+    opts.cwd = Util.root({ buf = opts.buf })
   end
 
   local cwd = opts.cwd or vim.uv.cwd()
@@ -62,7 +64,7 @@ end
 ---@param command string
 ---@param opts? lazyvim.util.pick.Opts
 function M._open(command, opts)
-  return LazyVim.telescope.open(command, opts)
+  return Util.telescope.open(command, opts)
 end
 
 function M.config_files()
